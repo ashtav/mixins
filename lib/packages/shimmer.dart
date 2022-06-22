@@ -4,9 +4,6 @@
 ///
 /// A package provides an easy way to add shimmer effect to Flutter application
 ///
-
-library shimmer;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -91,20 +88,8 @@ class Shimmer extends StatefulWidget {
   })  : gradient = LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.centerRight,
-            colors: <Color>[
-              baseColor,
-              baseColor,
-              highlightColor,
-              baseColor,
-              baseColor
-            ],
-            stops: const <double>[
-              0.0,
-              0.35,
-              0.5,
-              0.65,
-              1.0
-            ]),
+            colors: <Color>[baseColor, baseColor, highlightColor, baseColor, baseColor],
+            stops: const <double>[0.0, 0.35, 0.5, 0.65, 1.0]),
         super(key: key);
 
   @override
@@ -113,13 +98,10 @@ class Shimmer extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Gradient>('gradient', gradient,
-        defaultValue: null));
+    properties.add(DiagnosticsProperty<Gradient>('gradient', gradient, defaultValue: null));
     properties.add(EnumProperty<ShimmerDirection>('direction', direction));
-    properties.add(
-        DiagnosticsProperty<Duration>('period', period, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty<bool>('enabled', enabled, defaultValue: null));
+    properties.add(DiagnosticsProperty<Duration>('period', period, defaultValue: null));
+    properties.add(DiagnosticsProperty<bool>('enabled', enabled, defaultValue: null));
     properties.add(DiagnosticsProperty<int>('loop', loop, defaultValue: 0));
   }
 }
