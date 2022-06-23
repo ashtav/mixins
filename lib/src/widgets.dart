@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/src/packages/shimmer.dart';
+import 'package:mixins/ext/shimmer.dart';
 
 import 'shortcut.dart';
 

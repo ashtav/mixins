@@ -45,7 +45,7 @@ Container(
 
 ```dart 
 
-// use method on helper mixins Mixins.helper_name, eg:
+// use method on helper mixins with Mixins.helper_name, eg:
 
 Mixins.hex('#fff'); // white
 Mixins.orientation([DeviceOrientation.landscapeLeft]);

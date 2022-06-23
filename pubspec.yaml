@@ -1,6 +1,6 @@
 name: mixins
 description: Mixins is a package for shortening the use of some widgets or properties.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/ashtav/mixins
 
 environment:

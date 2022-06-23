@@ -10,3 +10,7 @@
 
 * add input formatter
 * add some helper method
+
+## 0.0.4
+
+* some bug fixes
