@@ -1,6 +1,6 @@
 ## Usage
 
-It's not a great package, just help us to code briefly, everyone can make their own easily
+It's not a great package, just help us to code briefly, everyone can make their own easily.
 To use this plugin, add `mixins` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
 
 ### Example
