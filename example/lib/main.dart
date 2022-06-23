@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
             child: Container(
           margin: Ei.all(15),
           padding: Ei.sym(v: 15),
-          decoration: BoxDecoration(border: Br.only(['t'], color: Colors.white), borderRadius: Br.radius(5)),
+          decoration: BoxDecoration(
+              border: Br.only(['t'], color: Colors.white),
+              borderRadius: Br.radius(5)),
           child: Column(
             children: [
               Textr(

@@ -14,7 +14,16 @@ class Iconr extends StatelessWidget {
   final Color? color;
   final double? size;
 
-  const Iconr(this.icon, {Key? key, this.margin, this.padding, this.width, this.radius, this.color, this.size, this.alignment, this.border})
+  const Iconr(this.icon,
+      {Key? key,
+      this.margin,
+      this.padding,
+      this.width,
+      this.radius,
+      this.color,
+      this.size,
+      this.alignment,
+      this.border})
       : super(key: key);
 
   @override
@@ -69,7 +78,12 @@ class Textr extends StatelessWidget {
       margin: margin,
       width: width,
       decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
+      child: Text(text,
+          style: style,
+          textAlign: textAlign,
+          overflow: overflow,
+          softWrap: softwrap,
+          maxLines: maxLines),
     );
   }
 }
@@ -104,7 +118,12 @@ class Col extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
 
-  const Col({Key? key, required this.children, this.mainAxisAlignment = Maa.start, this.mainAxisSize = Mas.min}) : super(key: key);
+  const Col(
+      {Key? key,
+      required this.children,
+      this.mainAxisAlignment = Maa.start,
+      this.mainAxisSize = Mas.min})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,16 +145,19 @@ class CenterDialog extends StatelessWidget {
   final Widget child;
   final double margin;
 
-  const CenterDialog({Key? key, required this.child, this.margin = 15}) : super(key: key);
+  const CenterDialog({Key? key, required this.child, this.margin = 15})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: Ei.only(b: MediaQuery.of(context).viewInsets.bottom),
       child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Material(color: Colors.transparent, child: Container(margin: EdgeInsets.all(margin), child: child))])),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Material(
+            color: Colors.transparent,
+            child: Container(margin: EdgeInsets.all(margin), child: child))
+      ])),
     );
   }
 }
@@ -145,7 +167,9 @@ class Intrinsic extends StatelessWidget {
   final List<Widget> children;
   final Axis axis;
 
-  const Intrinsic({Key? key, required this.children, this.axis = Axis.horizontal}) : super(key: key);
+  const Intrinsic(
+      {Key? key, required this.children, this.axis = Axis.horizontal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => IntrinsicHeight(
@@ -205,10 +229,16 @@ class InkW extends StatelessWidget {
               onLongPress: onLongPress,
               splashColor: !enableSplash
                   ? Colors.transparent
-                  : splash ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.08)),
+                  : splash ??
+                      (color == null || !splashByBaseColor
+                          ? const Color.fromRGBO(0, 0, 0, .03)
+                          : color?.withOpacity(.08)),
               highlightColor: !enableSplash
                   ? Colors.transparent
-                  : highlightColor ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.1)),
+                  : highlightColor ??
+                      (color == null || !splashByBaseColor
+                          ? const Color.fromRGBO(0, 0, 0, .03)
+                          : color?.withOpacity(.1)),
               onTap: onTap,
               borderRadius: borderRadius,
               child: Container(
@@ -236,12 +266,22 @@ class Touch extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? margin;
 
-  const Touch({Key? key, required this.child, this.onTap, this.onDoubleTap, this.margin}) : super(key: key);
+  const Touch(
+      {Key? key,
+      required this.child,
+      this.onTap,
+      this.onDoubleTap,
+      this.margin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        key: key, onTap: onTap, onDoubleTap: onDoubleTap, behavior: HitTestBehavior.translucent, child: Container(margin: margin, child: child));
+        key: key,
+        onTap: onTap,
+        onDoubleTap: onDoubleTap,
+        behavior: HitTestBehavior.translucent,
+        child: Container(margin: margin, child: child));
   }
 }
 
@@ -278,7 +318,8 @@ class Skeleton extends StatelessWidget {
         margin: margin,
         child: Shimmer.fromColors(
           baseColor: baseColor,
-          highlightColor: darkMode ? Colors.white.withOpacity(.5) : highlightColor,
+          highlightColor:
+              darkMode ? Colors.white.withOpacity(.5) : highlightColor,
           child: Container(
             width: size is List ? size[0].toDouble() : size.toDouble(),
             height: size is List
@@ -287,7 +328,8 @@ class Skeleton extends StatelessWidget {
                     : size[1].toDouble()
                 : size.toDouble(),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius)),
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(radius)),
           ),
         ),
       );
@@ -295,7 +337,8 @@ class Skeleton extends StatelessWidget {
 
 class NoScrollGlow extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }

@@ -34,8 +34,10 @@ class Mixins {
   /// }
   /// ```
   static errorCatcher(e, StackTrace s) {
-    List frames = Trace.current().frames, terseFrames = Trace.from(s).terse.frames;
-    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0], trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
+    List frames = Trace.current().frames,
+        terseFrames = Trace.from(s).terse.frames;
+    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0],
+        trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
 
     String errorLocation = '${frame.member}', errorLine = '${trace.line}';
     clog('-- Error on $errorLocation (Line $errorLine), $e');
@@ -46,19 +48,25 @@ class Mixins {
   /// ``` dart
   /// Mixins.statusBar();
   /// ```
-  static statusBar({Brightness brightness = Brightness.dark, Color background = Colors.transparent}) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: background, statusBarIconBrightness: brightness));
+  static statusBar(
+      {Brightness brightness = Brightness.dark,
+      Color background = Colors.transparent}) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: background, statusBarIconBrightness: brightness));
   }
 
   /// ``` dart
   /// Mixins.hideStatusBar();
   /// ```
-  static void hideStatusBar() => SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  static void hideStatusBar() =>
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
   /// ``` dart
   /// Mixins.showStatusBar();
   /// ```
-  static void showStatusBar() => SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  static void showStatusBar() =>
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: SystemUiOverlay.values);
 
   // CLIPBOARD =============================================
 
@@ -85,45 +93,63 @@ class Mixins {
   ///   // do something...
   /// }, 100);
   /// ```
-  static timer(void Function() then, [int ms = 50]) => Timer(Duration(milliseconds: ms), then);
+  static timer(void Function() then, [int ms = 50]) =>
+      Timer(Duration(milliseconds: ms), then);
 
   /// ``` dart
   /// Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Sabtu, 20 Maret 2021
   /// ```
-  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) => Mixins.dateFormat(DateTime.fromMillisecondsSinceEpoch(ms), format: format);
+  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) =>
+      Mixins.dateFormat(DateTime.fromMillisecondsSinceEpoch(ms),
+          format: format);
 
   /// ```dart
   /// String timeElapsed = Mixins.timeElapsed('2021-02-24 11:12:30', inDay: 'day ago');
   /// // put value with String or DateTime only
   /// // only for 1 month calculation
   /// ```
-  static String timeElapsed(dynamic dateTime, {String? inDay, String? inHour, String? inMinute, String justNow = 'just now'}) {
+  static String timeElapsed(dynamic dateTime,
+      {String? inDay,
+      String? inHour,
+      String? inMinute,
+      String justNow = 'just now'}) {
     try {
-      Duration compare(DateTime x, DateTime y) => Duration(microseconds: (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
+      Duration compare(DateTime x, DateTime y) => Duration(
+          microseconds:
+              (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
 
       DateTime date = dateTime is String ? DateTime.parse(dateTime) : dateTime;
 
       DateTime x = DateTime.now();
-      DateTime y = DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second);
+      DateTime y = DateTime(
+          date.year, date.month, date.day, date.hour, date.minute, date.second);
 
       Duration diff = compare(x, y);
-      String h = '${date.hour}'.padLeft(2, '0'), m = '${date.minute}'.padLeft(2, '0'), s = '${date.second}'.padLeft(2, '0');
+      String h = '${date.hour}'.padLeft(2, '0'),
+          m = '${date.minute}'.padLeft(2, '0'),
+          s = '${date.second}'.padLeft(2, '0');
 
-      String dateTimeStr = '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
+      String dateTimeStr =
+          '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
 
       // if init value more then current time
       if (y.millisecondsSinceEpoch > x.millisecondsSinceEpoch) {
         return '-';
       }
 
-      String textInDay(int value) => inDay ?? (value > 1 ? 'days ago' : 'day ago');
-      String textInHour(int value) => inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
-      String textInMinute(int value) => inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
+      String textInDay(int value) =>
+          inDay ?? (value > 1 ? 'days ago' : 'day ago');
+      String textInHour(int value) =>
+          inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
+      String textInMinute(int value) =>
+          inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
 
       if (diff.inSeconds >= 60) {
         if (diff.inMinutes >= 60) {
           if (diff.inHours >= 24) {
-            return diff.inDays > 31 ? dateTimeStr : '${diff.inDays} ${textInDay(diff.inDays)}';
+            return diff.inDays > 31
+                ? dateTimeStr
+                : '${diff.inDays} ${textInDay(diff.inDays)}';
           } else {
             return '${diff.inHours} ${textInHour(diff.inHours)}';
           }
@@ -143,7 +169,8 @@ class Mixins {
   /// ``` dart
   /// Mixins.doubleInRange(10, 100); // generate random double value between 10 - 100
   /// ```
-  static double doubleInRange(num start, num end) => Random().nextDouble() * (end - start) + start;
+  static double doubleInRange(num start, num end) =>
+      Random().nextDouble() * (end - start) + start;
 
   /// ``` dart
   /// Mixins.intInRange(100); // generate random int value with max 100
@@ -153,7 +180,8 @@ class Mixins {
   /// ``` dart
   /// Mixins.randNum(19); // generate random int value, max value is 19
   /// ```
-  static int randNum([int length = 12]) => int.parse(List.generate(length, (i) => '${intInRange(9)}').join(''));
+  static int randNum([int length = 12]) =>
+      int.parse(List.generate(length, (i) => '${intInRange(9)}').join(''));
 
   // CURSOR =================================================
 
@@ -161,8 +189,12 @@ class Mixins {
   /// TextEditingController name = TextEditingController();
   /// Mixins.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
-    Timer(Duration(milliseconds: time), () => controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)));
+  static setCursorToLastPosition(TextEditingController controller,
+      [int time = 0]) {
+    Timer(
+        Duration(milliseconds: time),
+        () => controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: controller.text.length)));
   }
 
   // SCROLL =================================================
@@ -171,14 +203,19 @@ class Mixins {
   /// ScrollController scroll = ScrollController();
   /// Mixins.scrollTo(scroll);
   /// ```
-  static scrollTo(ScrollController scrollController, {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
+  static scrollTo(ScrollController scrollController,
+      {int duration = 300,
+      int delay = 50,
+      AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
+            to == AxisDirection.down
+                ? scrollController.position.maxScrollExtent
+                : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -196,7 +233,10 @@ class Mixins {
   /// ```dart
   /// Mixins.orientation([DeviceOrientation.landscapeLeft]);
   /// ```
-  static void orientation([List<DeviceOrientation> orientations = const [DeviceOrientation.portraitUp]]) {
+  static void orientation(
+      [List<DeviceOrientation> orientations = const [
+        DeviceOrientation.portraitUp
+      ]]) {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
@@ -275,7 +315,8 @@ class Mixins {
     var bytes = await rootBundle.load('assets/$imageName');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/profile.png');
-    await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
   }
 
@@ -283,9 +324,11 @@ class Mixins {
   /// File result = await Mixins.resize(file);
   /// // params: size = const [width, height]
   /// ```
-  static Future<File> resize(File file, {int quality = 90, List<int> size = const [500, 500]}) async {
+  static Future<File> resize(File file,
+      {int quality = 90, List<int> size = const [500, 500]}) async {
     try {
-      File compressedFile = await FlutterNativeImage.compressImage(file.path, quality: 90, targetWidth: size[0], targetHeight: size[1]);
+      File compressedFile = await FlutterNativeImage.compressImage(file.path,
+          quality: 90, targetWidth: size[0], targetHeight: size[1]);
       return compressedFile;
     } catch (e) {
       rethrow;
@@ -300,8 +343,13 @@ class Mixins {
   /// ```
   static Future<Map> imageProperties(File file) async {
     try {
-      ImageProperties properties = await FlutterNativeImage.getImageProperties(file.path);
-      return {'width': properties.width, 'height': properties.height, 'orientation': properties.orientation};
+      ImageProperties properties =
+          await FlutterNativeImage.getImageProperties(file.path);
+      return {
+        'width': properties.width,
+        'height': properties.height,
+        'orientation': properties.orientation
+      };
     } catch (e) {
       return {'width': null, 'height': null, 'orientation': null};
     }
