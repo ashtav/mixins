@@ -18,18 +18,19 @@ class Br {
   static BoxBorder only(List<String> only,
           {Color color = Colors.black12,
           double width = 1.0,
+          bool except = false,
           BorderStyle style = BorderStyle.solid}) =>
       Border(
-          top: !only.contains('t')
+          top: !only.contains('t') || except
               ? BorderSide.none
               : Br.side(color, width: width, style: style),
-          bottom: !only.contains('b')
+          bottom: !only.contains('b') || except
               ? BorderSide.none
               : Br.side(color, width: width, style: style),
-          left: !only.contains('l')
+          left: !only.contains('l') || except
               ? BorderSide.none
               : Br.side(color, width: width, style: style),
-          right: !only.contains('r')
+          right: !only.contains('r') || except
               ? BorderSide.none
               : Br.side(color, width: width, style: style));
 
@@ -94,8 +95,13 @@ class Br {
 class Ei {
   static const none = EdgeInsets.all(0);
 
-  static only({double b = 0, double t = 0, double l = 0, double r = 0}) =>
-      EdgeInsets.only(bottom: b, top: t, left: l, right: r);
+  static only(
+          {double? b, double? t, double? l, double? r, double others = 0}) =>
+      EdgeInsets.only(
+          bottom: b ?? others,
+          top: t ?? others,
+          left: l ?? others,
+          right: r ?? others);
 
   static all(double value) => EdgeInsets.all(value);
 
@@ -145,6 +151,29 @@ class Caa {
   static const end = CrossAxisAlignment.end;
   static const baseline = CrossAxisAlignment.baseline;
   static const stretch = CrossAxisAlignment.stretch;
+}
+
+// ========================================
+// WRAP AXIS ALIGNMENT
+// ========================================
+
+class Wca {
+  static const start = WrapCrossAlignment.start;
+  static const center = WrapCrossAlignment.center;
+  static const end = WrapCrossAlignment.end;
+}
+
+// ========================================
+// WRAP ALIGNMENT
+// ========================================
+
+class Wa {
+  static const start = WrapAlignment.start;
+  static const center = WrapAlignment.center;
+  static const end = WrapAlignment.end;
+  static const spaceAround = WrapAlignment.end;
+  static const spaceBetween = WrapAlignment.end;
+  static const spaceEvenly = WrapAlignment.end;
 }
 
 // ========================================

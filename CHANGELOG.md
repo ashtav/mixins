@@ -14,3 +14,7 @@
 ## 0.0.4
 
 * some bug fixes
+
+## 0.0.5
+
+* some bug fixes
