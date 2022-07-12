@@ -11,6 +11,7 @@ export 'src/formatter.dart';
 export 'src/helper.dart';
 export 'src/lipsum.dart';
 export 'src/log.dart';
+export 'src/map_validator.dart';
 export 'src/shortcut.dart';
 export 'src/transition.dart';
 export 'src/widgets.dart';
