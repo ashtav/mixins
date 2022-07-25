@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -230,5 +231,11 @@ extension DateTimeExtension on DateTime {
     }
 
     return wom;
+  }
+}
+
+extension CustomListExtension on List {
+  dynamic random() {
+    return this[Random().nextInt(length)];
   }
 }

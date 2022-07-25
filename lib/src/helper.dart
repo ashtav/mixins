@@ -76,8 +76,8 @@ class Mixins {
   /// ```dart
   /// String date = Mixins.dateFormat(DateTime.now(), format: 'dd/MM/yyyy');
   /// ```
-  static String dateFormat(DateTime dateTime, {String format = 'dd/MM/yyyy'}) {
-    return DateFormat(format).format(dateTime);
+  static String dateFormat(DateTime? dateTime, {String format = 'dd/MM/yyyy'}) {
+    return dateTime == null ? '-' : DateFormat(format).format(dateTime);
   }
 
   /// ```dart

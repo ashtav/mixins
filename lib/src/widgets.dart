@@ -128,7 +128,7 @@ class CenterDialog extends StatelessWidget {
   final double margin;
   final BorderRadius? borderRadius;
 
-  const CenterDialog({Key? key, required this.child, this.margin = 15, this.borderRadius}) : super(key: key);
+  const CenterDialog({Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
