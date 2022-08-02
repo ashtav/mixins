@@ -143,17 +143,67 @@ class Mixins {
   /// ``` dart
   /// Mixins.doubleInRange(10, 100); // generate random double value between 10 - 100
   /// ```
-  static double doubleInRange(num start, num end) => Random().nextDouble() * (end - start) + start;
+  static double doubleInRange(num start, num end) => start + (Random().nextDouble() * (end - start));
 
   /// ``` dart
-  /// Mixins.intInRange(100); // generate random int value with max 100
+  /// Mixins.intInRange(50, 100); // generate random int value
   /// ```
-  static int intInRange(int max) => Random().nextInt(max);
+  static int intInRange(num start, num end) {
+    num max = 2147483647;
+
+    num num1 = start > max
+        ? max
+        : start < -max
+            ? -max
+            : start;
+    num num2 = end > max
+        ? max
+        : end < -max
+            ? -max
+            : end;
+
+    return num1.toInt() + (Random().nextInt(num2.toInt() - num1.toInt()));
+  }
 
   /// ``` dart
-  /// Mixins.randNum(19); // generate random int value, max value is 19
+  /// Mixins.randNum(18); // generate random int value, max length is 18
   /// ```
-  static int randNum([int length = 12]) => int.parse(List.generate(length, (i) => '${intInRange(9)}').join(''));
+  static int randNum([int length = 10]) {
+    if (length > 18) length = 18;
+
+    String rand = '';
+    for (int i = 0; i < length - 1; i++) {
+      while (rand == '' || rand[0] == '0') {
+        rand = Random().nextInt(10).toString();
+      }
+
+      rand += Random().nextInt(10).toString();
+    }
+    return int.parse(rand);
+  }
+
+  /// ``` dart
+  /// Mixins.randString(10); // generate random string value
+  /// ```
+  static String randString(int length, {bool withSymbol = false, List<String> customChar = const []}) {
+    String chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    if (customChar.isNotEmpty) {
+      chars = customChar.join();
+    }
+
+    if (withSymbol) {
+      chars += '!@#\$%^&*()_+-=[]{}|;:<>?,./';
+    }
+
+    if (length < 1) length = 1;
+
+    String rand = '';
+    for (int i = 0; i < length; i++) {
+      rand += chars[Random().nextInt(chars.length)];
+    }
+    return rand;
+  }
 
   // CURSOR =================================================
 
@@ -189,6 +239,88 @@ class Mixins {
     } catch (e) {
       rethrow;
     }
+  }
+
+  ///
+  /// ```dart
+  /// ListView(
+  ///   controller: yourScrollController,
+  ///   children: [
+  ///     YourWidget(
+  ///       key: yourGlobalKey
+  ///     )
+  ///   ]
+  /// )
+  ///
+  /// onTap: (){
+  ///   Mixins.scrollToWidget(yourGlobalKey, yourScrollController, MediaQuery.of(context).size.width);
+  /// }
+  /// ```
+
+  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
+    if (key.currentContext != null) {
+      RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
+
+      // get width of widget
+      double w = box.size.width;
+
+      // get horizontal position of widget
+      double dx = box.localToGlobal(Offset.zero).dx;
+
+      // get max scroll of List
+      double ms = controller.position.maxScrollExtent;
+
+      // get pixel of scroll position
+      double pixel = controller.position.pixels;
+
+      // result, the center position of widget
+      double pos = (pixel + dx) - (screenWidth / 2) + (w / 2);
+
+      // scroll to position
+      controller.animateTo(
+          pos < 0
+              ? 0
+              : pos > ms
+                  ? ms
+                  : pos,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.ease);
+    }
+  }
+
+  /// This function will set scroll to default position when user scroll to max position
+  /// ``` dart
+  /// List max = [10, 50]; // [top, bottom]
+  /// double max = 50; // this value will set to top and bottom
+  ///
+  /// bool hasMax = scrollHasMax(scrollController, max);
+  ///
+  /// // for example:
+  /// void yourScrollListener() {
+  ///   double pixel = scrollController.position.pixels;
+  ///
+  ///   if (scrollHasMax(scrollController, [20, 50])) {
+  ///     scrollController.animateTo(pixel, duration: const Duration(milliseconds: 250), curve: Curves.easeInBack);
+  ///   }
+  /// }
+  /// ```
+  static bool scrollHasMax(ScrollController scrollController, dynamic max) {
+    bool isMaxList = max is List;
+
+    // if max is integer or double
+    max = max is int ? max.toDouble() : max;
+
+    if (isMaxList) {
+      if (max.length == 1) max.add(max[0]);
+      max = max.map((e) => e is int ? e.toDouble() : e).toList();
+    }
+
+    double maxT = isMaxList ? max[0] : max;
+    double maxB = isMaxList ? max[1] : max;
+
+    double pixel = scrollController.position.pixels;
+    double maxPixel = scrollController.position.maxScrollExtent;
+    return (pixel < -maxB || pixel > (maxPixel + maxT));
   }
 
   // SCREEN =================================================
