@@ -14,7 +14,8 @@ extension CustomExtension on Map<String, TextEditingController> {
   ///   "name": "John Doe"
   /// }
   /// ```
-  Map<String, dynamic> tecToMap() => map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> tecToMap() =>
+      map((key, value) => MapEntry(key, value.text));
 }
 
 // CUSTOM STRING EXTENSION ===============
@@ -67,7 +68,9 @@ extension CustomStringExtension on String {
 
     try {
       List<String> char = split(' ');
-      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char
+          .take(length)
+          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '!';
@@ -145,7 +148,9 @@ extension CustomDynamicExtension on dynamic {
     try {
       String numberStr = toString();
       int number = numberStr.isEmpty ? 0 : numberStr.getNumberOnly;
-      return NumberFormat.currency(locale: 'id_ID', decimalDigits: decimalDigits, symbol: symbol).format(number);
+      return NumberFormat.currency(
+              locale: 'id_ID', decimalDigits: decimalDigits, symbol: symbol)
+          .format(number);
     } catch (e) {
       return 'Rp?';
     }
@@ -167,7 +172,10 @@ extension CustomDynamicExtension on dynamic {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key,
+      {String? setKeyAs,
+      Function(dynamic)? wrapWith,
+      List<String> addKeys = const []}) {
     if (this is! List) throw Exception('groupBy only works on List');
 
     try {

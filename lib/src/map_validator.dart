@@ -55,7 +55,9 @@ class Mv {
       bool isMapTec = request is Map<String, TextEditingController>;
 
       // turn request into map
-      Map<String, dynamic> map = isMapTec ? request.map((key, value) => MapEntry(key, value.text)) : request;
+      Map<String, dynamic> map = isMapTec
+          ? request.map((key, value) => MapEntry(key, value.text))
+          : request;
 
       if (rule is String && rule.contains('required.all')) {
         List<String> except = rule.split('|');
