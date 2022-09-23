@@ -1,6 +1,6 @@
 name: mixins
 description: Mixins is a package for shortening the use of some widgets or properties.
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/ashtav/mixins
 
 environment:
@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_native_image: ^0.0.6+1
   http: ^0.13.4
   intl: ^0.17.0
   path_provider: ^2.0.11

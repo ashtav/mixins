@@ -22,3 +22,7 @@
 ## 0.0.6
 
 * add and fix some methods on mixins helper
+
+## 0.0.7
+
+* bug fixes

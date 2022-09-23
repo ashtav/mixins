@@ -6,7 +6,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:mixins/src/log.dart';
@@ -453,43 +452,4 @@ class Mixins {
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
   }
-
-  /// ```dart
-  /// File result = await Mixins.resize(file);
-  /// // params: size = const [width, height]
-  /// ```
-  static Future<File> resize(File file,
-      {int quality = 90, List<int> size = const [500, 500]}) async {
-    try {
-      File compressedFile = await FlutterNativeImage.compressImage(file.path,
-          quality: 90, targetWidth: size[0], targetHeight: size[1]);
-      return compressedFile;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  /// ```dart
-  /// // get image info
-  /// Map info = await Mixins.imageProperties(file);
-  /// // this function will return map
-  /// Map info = {"width": 300, "height": 300, "orientation": ImageOrientation}
-  /// ```
-  static Future<Map> imageProperties(File file) async {
-    try {
-      ImageProperties properties =
-          await FlutterNativeImage.getImageProperties(file.path);
-      return {
-        'width': properties.width,
-        'height': properties.height,
-        'orientation': properties.orientation
-      };
-    } catch (e) {
-      return {'width': null, 'height': null, 'orientation': null};
-    }
-  }
-
-  static bool isEmail(String value) => RegExp(
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-      .hasMatch(value);
 }
