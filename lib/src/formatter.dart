@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:mixins/src/extension.dart';
+import 'package:mixins/src/extensions/string_extension.dart';
 
 class MixinsFormatter {
   static TextInputFormatter get numberOnly =>

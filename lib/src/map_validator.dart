@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/src/extension.dart';
+import 'package:mixins/src/extensions/string_extension.dart';
 
 // MAP VALIDATOR
 // It is used to validate the data of a Map<String, dynamic>
@@ -46,7 +46,7 @@ class Mv {
       List<String> errors = [], errKeys = [], types = [];
 
       // function to put error message to errors and error keys to errKeys
-      void _addError(String key, String message) {
+      void addError(String key, String message) {
         errors.add(message);
         errKeys.add(key);
       }
@@ -68,11 +68,11 @@ class Mv {
               List excepts = except[1].split(',');
 
               if (!excepts.contains(k)) {
-                _addError(k, '$k is required');
+                addError(k, '$k is required');
                 types.add('required');
               }
             } else {
-              _addError(k, '$k is required');
+              addError(k, '$k is required');
               types.add('required');
             }
           }
@@ -91,7 +91,7 @@ class Mv {
           // check required
           if (rules.contains('required')) {
             if (map[k] == null || '${map[k]}'.trim().isEmpty) {
-              _addError(k, '$k is required');
+              addError(k, '$k is required');
               types.add('required');
             }
           }
@@ -99,7 +99,7 @@ class Mv {
           // check email validation
           if (rules.contains('email')) {
             if (!'${map[k]}'.isEmail) {
-              _addError(k, '$k is not valid email');
+              addError(k, '$k is not valid email');
               types.add('email');
             }
           }
@@ -107,7 +107,7 @@ class Mv {
           // check numeric
           if (rules.contains('numeric')) {
             if (map[k] != null && !RegExp(r'^[0-9]+$').hasMatch('${map[k]}')) {
-              _addError(k, '$k must be numeric');
+              addError(k, '$k must be numeric');
               types.add('numeric');
             }
           }
@@ -117,7 +117,7 @@ class Mv {
             // get string between 'min:' and '|'
             String min = rule[k].split('min:')[1].split('|')[0];
             if (map[k] == null || '${map[k]}'.length < int.parse(min)) {
-              _addError(k, 'min length of $k is $min');
+              addError(k, 'min length of $k is $min');
               types.add('min');
             }
           }
@@ -127,7 +127,7 @@ class Mv {
             // get string between 'max:' and '|'
             String max = rule[k].split('max:')[1].split('|')[0];
             if (map[k] == null || '${map[k]}'.length > int.parse(max)) {
-              _addError(k, 'max length of $k is $max');
+              addError(k, 'max length of $k is $max');
               types.add('max');
             }
           }
