@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 extension CustomExtension on Map<String, TextEditingController> {
   /// ``` dart
@@ -14,8 +13,7 @@ extension CustomExtension on Map<String, TextEditingController> {
   ///   "name": "John Doe"
   /// }
   /// ```
-  Map<String, dynamic> tecToMap() =>
-      map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> tecToMap() => map((key, value) => MapEntry(key, value.text));
 }
 
 // CUSTOM STRING EXTENSION ===============
@@ -68,9 +66,7 @@ extension CustomStringExtension on String {
 
     try {
       List<String> char = split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '!';
@@ -144,17 +140,6 @@ extension CustomDynamicExtension on dynamic {
   /// print('9500'.idr()); // Rp9.500
   /// print(9500.idr()); // Rp9.500
   /// ```
-  String idr({String symbol = 'Rp', int decimalDigits = 0}) {
-    try {
-      String numberStr = toString();
-      int number = numberStr.isEmpty ? 0 : numberStr.getNumberOnly;
-      return NumberFormat.currency(
-              locale: 'id_ID', decimalDigits: decimalDigits, symbol: symbol)
-          .format(number);
-    } catch (e) {
-      return 'Rp?';
-    }
-  }
 
   /// ``` dart
   /// print(99025.formatBytes()); // 96.7 KB
@@ -172,10 +157,7 @@ extension CustomDynamicExtension on dynamic {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     if (this is! List) throw Exception('groupBy only works on List');
 
     try {
@@ -211,39 +193,5 @@ extension CustomDynamicExtension on dynamic {
     } catch (e) {
       throw Exception('$e');
     }
-  }
-}
-
-// DATETIME EXTENSION ===============
-
-extension DateTimeExtension on DateTime {
-  int get weekOfMonth {
-    var wom = 0;
-    var date = this;
-
-    while (date.month == month) {
-      wom++;
-      date = date.subtract(const Duration(days: 7));
-    }
-
-    return wom;
-  }
-
-  int get weekOfYear {
-    var wom = 0;
-    var date = this;
-
-    while (date.year == year) {
-      wom++;
-      date = date.subtract(const Duration(days: 7));
-    }
-
-    return wom;
-  }
-}
-
-extension CustomListExtension on List {
-  dynamic random() {
-    return this[Random().nextInt(length)];
   }
 }

@@ -7,6 +7,10 @@ export 'package:stack_trace/stack_trace.dart';
 
 export 'ext/shimmer.dart';
 export 'src/extension.dart';
+export 'src/extensions/context_extension.dart';
+export 'src/extensions/datetime_extension.dart';
+export 'src/extensions/dynamic_extension.dart';
+export 'src/extensions/list_extension.dart';
 export 'src/formatter.dart';
 export 'src/helper.dart';
 export 'src/lipsum.dart';
