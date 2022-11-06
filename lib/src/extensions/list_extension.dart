@@ -13,6 +13,19 @@ extension ListExtension on List {
   }
 }
 
+extension ListNumExtension on List<num> {
+  /// ```dart
+  /// [10, 50].inRange() // 30.5
+  /// ```
+  num numInRange([Type type = double]) {
+    if (isEmpty) return 0;
+    num start = this[0], end = length > 1 ? this[1] : this[0];
+    num result = start + (Random().nextDouble() * (end - start));
+
+    return type == int ? result = result.round() : result = result;
+  }
+}
+
 extension ListMapExtension on List<Map> {
   /// ``` dart
   /// List<Map> group = data.groupBy('gender', wrapWith: (data){

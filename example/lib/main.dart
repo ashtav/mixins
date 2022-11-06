@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
 void main() {
-  Mixins.statusBar(navBarColor: Colors.white);
+  Mixins.setSystemUI(navBarColor: Colors.white);
   runApp(const MyApp());
 }
 
@@ -43,9 +43,18 @@ class HomePage extends StatelessWidget {
             ),
           ),
           InkW(
-            onTap: () {},
+            onTap: () {
+              try {
+                // do something...
+              } catch (e, s) {
+                Mixins.errorCatcher(e, s);
+              }
+            },
             padding: Ei.sym(v: 15, h: 20),
             child: const Text('Click Me'),
+          ),
+          const Skeleton(
+            size: [200, 5],
           )
         ],
       )),

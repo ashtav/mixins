@@ -6,14 +6,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
+import 'package:mixins/src/extensions/datetime_extension.dart';
 import 'package:mixins/src/log.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class Mixins {
   /// ``` dart
-  /// Mixins.hex('#fff'); // white
+  /// Mixins.hex('fff'); // white
   /// ```
   static Color hex(String code) {
     String cc = code.replaceAll('#', '');
@@ -41,15 +41,14 @@ class Mixins {
     clog('-- Error on $errorLocation (Line $errorLine), $e');
   }
 
-  // STATUS BAR ============================================
+  // SYSTEM CHROME ============================================
 
   /// ``` dart
-  /// Mixins.statusBar();
+  /// Mixins.setSystemUI();
   /// ```
-  static statusBar(
+  static setSystemUI(
       {Brightness brightness = Brightness.dark,
       Color? statusBarColor,
-      Color background = Colors.transparent,
       Color? navDividerColor,
       Color? navBarColor}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -60,17 +59,11 @@ class Mixins {
   }
 
   /// ``` dart
-  /// Mixins.hideStatusBar();
+  /// Mixins.statusBar(true); // set false to hide
   /// ```
-  static void hideStatusBar() =>
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-
-  /// ``` dart
-  /// Mixins.showStatusBar();
-  /// ```
-  static void showStatusBar() =>
+  static void statusBar([bool show = true]) =>
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: SystemUiOverlay.values);
+          overlays: show ? SystemUiOverlay.values : []);
 
   // CLIPBOARD =============================================
 
@@ -82,30 +75,19 @@ class Mixins {
     return true;
   }
 
-  // DATE & TIME ============================================
-
-  /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
-  /// ```dart
-  /// String date = Mixins.dateFormat(DateTime.now(), format: 'dd/MM/yyyy');
-  /// ```
-  static String dateFormat(DateTime? dateTime, {String format = 'dd/MM/yyyy'}) {
-    return dateTime == null ? '-' : DateFormat(format).format(dateTime);
-  }
-
   /// ```dart
   /// Timer timer = Mixins.timer((){
   ///   // do something...
   /// }, 100);
   /// ```
-  static timer(void Function() then, [int ms = 50]) =>
+  static Timer timer(void Function() then, [int ms = 50]) =>
       Timer(Duration(milliseconds: ms), then);
 
   /// ``` dart
   /// Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Sabtu, 20 Maret 2021
   /// ```
   static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) =>
-      Mixins.dateFormat(DateTime.fromMillisecondsSinceEpoch(ms),
-          format: format);
+      DateTime.fromMillisecondsSinceEpoch(ms).format(format);
 
   /// ```dart
   /// String timeElapsed = Mixins.timeElapsed('2021-02-24 11:12:30', inDay: 'day ago');
@@ -166,34 +148,6 @@ class Mixins {
     } catch (e) {
       rethrow;
     }
-  }
-
-  // NUMBER =================================================
-
-  /// ``` dart
-  /// Mixins.doubleInRange(10, 100); // generate random double value between 10 - 100
-  /// ```
-  static double doubleInRange(num start, num end) =>
-      start + (Random().nextDouble() * (end - start));
-
-  /// ``` dart
-  /// Mixins.intInRange(50, 100); // generate random int value
-  /// ```
-  static int intInRange(num start, num end) {
-    num max = 2147483647;
-
-    num num1 = start > max
-        ? max
-        : start < -max
-            ? -max
-            : start;
-    num num2 = end > max
-        ? max
-        : end < -max
-            ? -max
-            : end;
-
-    return num1.toInt() + (Random().nextInt(num2.toInt() - num1.toInt()));
   }
 
   /// ``` dart

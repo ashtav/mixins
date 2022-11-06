@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/ext/shimmer.dart';
-import 'package:mixins/src/helper.dart';
-
-import 'shortcut.dart';
+import 'package:mixins/mixins.dart';
 
 /// combination betweeen Icon and Container
 class Iconr extends StatelessWidget {
@@ -307,7 +304,6 @@ class None extends StatelessWidget {
 /// Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
 /// Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
 /// ```
-
 class Skeleton extends StatelessWidget {
   final Color baseColor, highlightColor, color;
   final double radius;
@@ -372,8 +368,8 @@ class Skeleton extends StatelessWidget {
         highlightColor:
             darkMode ? Colors.white.withOpacity(.5) : highlightColor,
         child: Container(
-          width: Mixins.doubleInRange(minW, maxW),
-          height: Mixins.doubleInRange(minH, maxH),
+          width: [minW, maxW].numInRange() as double,
+          height: [minH, maxH].numInRange() as double,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(
               color: color, borderRadius: BorderRadius.circular(radius)),

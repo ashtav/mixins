@@ -55,9 +55,11 @@ extension StringExtension on String {
   /// ``` dart
   /// 'lorem ipsum dolor'.removeStringBefore('ipsum'); // ipsum dolor
   /// ```
-  String removeStringBefore(String pattern) {
+  String removeStringBefore(String pattern, {bool includePattern = false}) {
     try {
-      return substring(lastIndexOf(pattern));
+      return !includePattern
+          ? substring(lastIndexOf(pattern))
+          : substring(lastIndexOf(pattern) + pattern.length);
     } catch (e) {
       return this;
     }
@@ -66,10 +68,14 @@ extension StringExtension on String {
   /// ``` dart
   /// 'lorem ipsum dolor'.removeStringAfter('ipsum'); // ipsum lorem
   /// ```
-  String removeStringAfter(String pattern) {
+  String removeStringAfter(String pattern, {bool includePattern = false}) {
     try {
       if (indexOf(pattern) == -1) return this;
-      return substring(0, indexOf(pattern) + pattern.length);
+      return substring(
+          0,
+          !includePattern
+              ? indexOf(pattern) + pattern.length
+              : indexOf(pattern));
     } catch (e) {
       return this;
     }

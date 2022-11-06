@@ -50,8 +50,9 @@ Container(
 |----------------------------------------
 */
 
-Mixins.doubleInRange(50, 100); // generate float number between 50 - 100
-Mixins.intInRange(50, 100); // generate integer number between 50 - 100
+[50, 100].numInRange(double) // generate float number between 50 - 100
+[50, 100].numInRange(int) // generate integer number between 50 - 100
+
 Mixins.randNum(18); // generate random int value, max length is 18
 Mixins.randString(10); // generate random string value
 
@@ -70,7 +71,7 @@ ListView(
     ]
 )
 
-double size = MediaQuery.of(context).size.width; // width or height
+double size = context.width; // width or height
 Mixins.scrollToWidget(yourGlobalKey, yourScrollController, size);
 
 // scroll to TOP OR BOTTOM
@@ -102,9 +103,8 @@ void yourScrollListener() {
 |----------------------------------------
 */
 
-Mixins.statusBar(); // transparent background of status bar
-Mixins.showStatusBar(); // show status bar
-Mixins.hideStatusBar(); // hide status bar
+Mixins.statusBar(true); // show or hide status bar
+Mixins.setSystemUI(navBarColor: Colors.white); // change status bar or navigation bar color
 
 /*
 |----------------------------------------
@@ -134,7 +134,7 @@ Mixins.fileToBase64(file);
 */
 
 String date = Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Saturday, 20 March 2021
-String date = Mixins.dateFormat(DateTime.now(), format: 'dd/MM/yyyy');
+DateTime.now().format('dd/MM/yyyy')
 
 /*
 |----------------------------------------
@@ -142,7 +142,7 @@ String date = Mixins.dateFormat(DateTime.now(), format: 'dd/MM/yyyy');
 |----------------------------------------
 */
 
-Mixins.hex('#fff'); // white
+Mixins.hex('fff'); // white
 Mixins.orientation([DeviceOrientation.landscapeLeft]);
 
 Mixins.copy('<your token here>'); // copy text to clipboard

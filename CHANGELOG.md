@@ -26,3 +26,9 @@
 ## 0.0.7
 
 * bug fixes
+
+## 0.0.8
+
+* add and split extension
+* change some methods
+* bug fixes
