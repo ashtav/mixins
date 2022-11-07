@@ -2,7 +2,7 @@ import 'dart:math';
 
 extension ListExtension on List {
   /// ```dart
-  /// ['a', 'b', '4', 'e', '1'].getRandom() // 'e'
+  /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
   dynamic getRandom([int length = 1]) {
     List result = [];
@@ -15,7 +15,7 @@ extension ListExtension on List {
 
 extension ListNumExtension on List<num> {
   /// ```dart
-  /// [10, 50].inRange() // 30.5
+  /// [10, 50].numInRange() // 30.5
   /// ```
   num numInRange([Type type = double]) {
     if (isEmpty) return 0;
@@ -32,10 +32,7 @@ extension ListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];

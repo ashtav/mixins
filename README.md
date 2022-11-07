@@ -44,6 +44,19 @@ Container(
 ### Helpers
 
 ```dart 
+
+/*
+|----------------------------------------
+| CONTEXT
+|----------------------------------------
+*/
+
+context.height // get height of screen
+context.width // get width of screen
+context.padding // EdgeInsets
+context.viewPadding // EdgeInsets
+context.focus(FocusNode()) // set or unset focus
+
 /*
 |----------------------------------------
 | NUMBER & RANDOM
@@ -55,6 +68,34 @@ Container(
 
 Mixins.randNum(18); // generate random int value, max length is 18
 Mixins.randString(10); // generate random string value
+
+/*
+|----------------------------------------
+| LIST
+|----------------------------------------
+*/
+
+['a', 'b', '4', 'e', '1'].getRandom() // ['e']
+[10, 50].numInRange() // 30.5
+
+[{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}].groupBy('date')
+// result: [{'2022-01-01': [{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}]}]
+
+/*
+|----------------------------------------
+| STRING
+|----------------------------------------
+*/
+
+'john doe'.ucwords // John Doe
+'lipsum99'.getNumberOnly // 99
+'john doe'.firstChar() // JD
+'lorem ipsum dolor'.removeStringBefore('ipsum'); // ipsum dolor
+'lorem ipsum dolor'.removeStringAfter('ipsum'); // lorem ipsum
+'lorem ipsum dolor'.removeStringBetween('lorem','ipsum'); // lorem dolor
+'lorem ipsum dolor'.getStringBetween('lorem','ipsum'); // ipsum
+'<h1>Hello World</h1>'.removeHtmlTag; // Hello World
+'{}'.isJson; // true
 
 /*
 |----------------------------------------
@@ -136,6 +177,9 @@ Mixins.fileToBase64(file);
 String date = Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Saturday, 20 March 2021
 DateTime.now().format('dd/MM/yyyy')
 
+DateTime.now().weekOfMonth // get number of week in month
+DateTime.now().weekOfYear // get number of week in year
+
 /*
 |----------------------------------------
 | OTHERS
@@ -146,5 +190,16 @@ Mixins.hex('fff'); // white
 Mixins.orientation([DeviceOrientation.landscapeLeft]);
 
 Mixins.copy('<your token here>'); // copy text to clipboard
+
+1500.idr() // convert to IDR currency, Rp1.500
+// Another example '2.500'.idr() -> Rp2.500, 3500.15.idr() -> Rp3.500,15
+
+'45'.isNumeric // true
+344.isNumeric // true
+
+String? text;
+text.isNull // true, instead of text == null
+
+99025.formatBytes() // 96.7 KB
 
 ```
