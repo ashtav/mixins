@@ -63,4 +63,10 @@ extension DynamicExtension on dynamic {
   /// print(data.isNull); // true
   /// ```
   get isNull => (this == null);
+
+  /// ``` dart
+  /// String? data;
+  /// print(data.isNotNull); // false
+  /// ```
+  get isNotNull => (this != null);
 }
