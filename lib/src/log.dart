@@ -5,7 +5,7 @@ import 'dart:developer';
 /// // available colors: yellow (y), blue (b), green (g), red (r), purple (p), cyan (c) and bright blue (bb)
 /// ```
 
-clog(dynamic value, {String color = 'y', int limit = 500}) {
+clog(dynamic value, {String color = 'y', int limit = 500, String? name}) {
   Map<String, dynamic> colors = {
     'y': '93m', // yellow
     'b': '34m', // blue
@@ -27,5 +27,5 @@ clog(dynamic value, {String color = 'y', int limit = 500}) {
   // print on debug console
   String message = '\x1B[$colorCode$subStr\x1B[0m';
   log(subStr.length < valueString.length ? '$message.....' : message,
-      name: 'LOG');
+      name: name ?? 'LOG');
 }
