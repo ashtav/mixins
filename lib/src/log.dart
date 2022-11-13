@@ -29,3 +29,6 @@ clog(dynamic value, {String color = 'y', int limit = 500, String? name}) {
   log(subStr.length < valueString.length ? '$message.....' : message,
       name: name ?? 'LOG');
 }
+
+logg(dynamic value, {String color = 'y', int limit = 500, String? name}) =>
+    clog(value, color: color, limit: limit, name: name);
