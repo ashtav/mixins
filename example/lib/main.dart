@@ -50,6 +50,8 @@ class HomePage extends StatelessWidget {
                 Mixins.errorCatcher(e, s);
               }
             },
+            onTapDown: (details) => logg(details),
+            color: Colors.white,
             padding: Ei.sym(v: 15, h: 20),
             child: const Text('Click Me'),
           ),
