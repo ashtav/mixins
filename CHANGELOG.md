@@ -32,3 +32,7 @@
 * add and split extension
 * change some methods
 * bug fixes
+
+## 0.0.9
+
+* bug fixes

@@ -43,7 +43,9 @@ extension StringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char
+          .take(length)
+          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '!';
@@ -55,7 +57,9 @@ extension StringExtension on String {
   /// ```
   String removeStringBefore(String pattern, {bool includePattern = false}) {
     try {
-      return !includePattern ? substring(lastIndexOf(pattern)) : substring(lastIndexOf(pattern) + pattern.length);
+      return !includePattern
+          ? substring(lastIndexOf(pattern))
+          : substring(lastIndexOf(pattern) + pattern.length);
     } catch (e) {
       return this;
     }
@@ -67,7 +71,11 @@ extension StringExtension on String {
   String removeStringAfter(String pattern, {bool includePattern = false}) {
     try {
       if (indexOf(pattern) == -1) return this;
-      return substring(0, !includePattern ? indexOf(pattern) + pattern.length : indexOf(pattern));
+      return substring(
+          0,
+          !includePattern
+              ? indexOf(pattern) + pattern.length
+              : indexOf(pattern));
     } catch (e) {
       return this;
     }
@@ -123,5 +131,7 @@ extension StringExtension on String {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
       .hasMatch(this);
 
-  bool get isUrl => RegExp(r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$').hasMatch(this);
+  bool get isUrl => RegExp(
+          r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$')
+      .hasMatch(this);
 }
