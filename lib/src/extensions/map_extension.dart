@@ -5,6 +5,5 @@ extension MapTECExtension on Map<String, TextEditingController> {
   /// Map<String, TextEditingController> data = {'name': TextEditingController(text: 'John Doe')};
   /// Map<String, dynamic> map = data.tecToMap(); // { "name": "John Doe" }
   /// ```
-  Map<String, dynamic> tecToMap() =>
-      map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> tecToMap() => map((key, value) => MapEntry(key, value.text));
 }
