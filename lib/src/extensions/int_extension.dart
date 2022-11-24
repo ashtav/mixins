@@ -1,4 +1,8 @@
+import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:path_provider/path_provider.dart';
 
 extension IntExtension on int {
   /// ``` dart
@@ -10,5 +14,15 @@ extension IntExtension on int {
     const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     var i = (log(bytes) / log(1024)).floor();
     return '${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}';
+  }
+}
+
+extension Uint8ListExtension on Uint8List {
+  Future<File> toFile([String? filename]) async {
+    final Directory tempDir = await getTemporaryDirectory();
+    File file = await File('${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png').create();
+    file.writeAsBytesSync(this);
+
+    return file;
   }
 }

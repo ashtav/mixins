@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
@@ -35,21 +37,25 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: Maa.center,
         children: [
           Container(
-            decoration:
-                BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
+            decoration: BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
             child: Textr(
               'Hello World',
               padding: Ei.sym(v: 10, h: 25),
             ),
           ),
           InkW(
-            onTap: () {
+            onTap: () async {
               try {
+                File? myFile;
                 // do something...
+                String base64 = await Mixins.fileToBase64(myFile!);
+                File file = await Mixins.base64ToFile('BASE64-STRING');
               } catch (e, s) {
                 Mixins.errorCatcher(e, s);
               }
             },
+            onTapDown: (details) => logg(details),
+            color: Colors.white,
             padding: Ei.sym(v: 15, h: 20),
             child: const Text('Click Me'),
           ),

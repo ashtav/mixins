@@ -187,6 +187,8 @@ class Intrinsic extends StatelessWidget {
 /// custom widget of `InkWell`
 class InkW extends StatelessWidget {
   final Widget? child;
+  final Function(TapDownDetails? details)? onTapDown;
+  final Function(TapUpDetails? details)? onTapUp;
   final Function()? onTap, onLongPress, onDoubleTap;
   final EdgeInsetsGeometry? padding, margin;
   final Color? color, splash, highlightColor;
@@ -202,6 +204,8 @@ class InkW extends StatelessWidget {
       this.child,
       this.elevation = 0,
       this.onTap,
+      this.onTapDown,
+      this.onTapUp,
       this.onLongPress,
       this.onDoubleTap,
       this.padding,
@@ -230,6 +234,8 @@ class InkW extends StatelessWidget {
         child: Opacity(
           opacity: opacity,
           child: InkWell(
+              onTapDown: onTapDown,
+              onTapUp: onTapUp,
               onDoubleTap: onDoubleTap,
               onLongPress: onLongPress,
               splashColor: !enableSplash

@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:path_provider/path_provider.dart';
 
 extension StringExtension on String {
   /// ``` dart
@@ -117,6 +121,16 @@ extension StringExtension on String {
     } catch (e) {
       return false;
     }
+  }
+
+  /// ``` dart
+  /// File file = await '<base64-string>'.base64ToFile();
+  /// ```
+  Future<File> base64ToFile() async {
+    Uint8List uint8list = base64Decode(this);
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = File("$dir/${DateTime.now().millisecondsSinceEpoch}.png");
+    return await file.writeAsBytes(uint8list);
   }
 
   bool get isEmail => RegExp(

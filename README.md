@@ -99,6 +99,18 @@ Mixins.randString(10); // generate random string value
 
 /*
 |----------------------------------------
+| MAP
+|----------------------------------------
+*/
+
+Map<String, TextEditingController> forms = {'name': TextEditingController()}
+Map<String, dynamic> data = forms.toMap(manipulate: (map) {
+    return map.numberOnly(['price', 'stock']).ucwords(['name']);
+});
+
+
+/*
+|----------------------------------------
 | SCROLL TO WIDGET
 |----------------------------------------
 */
@@ -165,8 +177,14 @@ Mixins.imageToFile('images/item.png')
 // convert image url to file
 Mixins.urlToFile('<your image url>')
 
-// convert file to base64
+// convert File to Base64
 Mixins.fileToBase64(file);
+
+// convert Uint8List to File
+File file = await [].toFile();
+
+// convert Base64 to File
+File file = await '<base64-string>'.base64ToFile();
 
 /*
 |----------------------------------------
@@ -201,5 +219,8 @@ String? text;
 text.isNull // true, instead of text == null
 
 99025.formatBytes() // 96.7 KB
+
+String? name;
+name.instead('-', [null, '']) // it's mean if name is null or empty, then return '-'
 
 ```

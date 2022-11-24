@@ -35,18 +35,11 @@ extension DynamicExtension on dynamic {
         default:
       }
 
-      bool allowDecimal =
-          runtimeType == int || runtimeType == String && !contains('.');
+      bool allowDecimal = runtimeType == int || runtimeType == String && !contains('.');
 
-      String result = NumberFormat.currency(
-              locale: 'id_ID',
-              decimalDigits: allowDecimal ? decimalDigits : 0,
-              symbol: symbol)
-          .format(int.parse(num));
+      String result = NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
 
-      return digits.isEmpty
-          ? result
-          : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }
@@ -63,4 +56,19 @@ extension DynamicExtension on dynamic {
   /// print(data.isNull); // true
   /// ```
   get isNull => (this == null);
+
+  /// ``` dart
+  /// String? data;
+  /// print(data.isNotNull); // false
+  /// ```
+  get isNotNull => (this != null);
+
+  /// ``` dart
+  /// String? name;
+  /// name.instead('-', [null, '']) // it's mean if name is null or empty, then return '-'
+  /// ```
+  ///
+  dynamic instead(dynamic value, [List conditions = const [null, '']]) {
+    return conditions.contains(this) ? value : this;
+  }
 }
