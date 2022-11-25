@@ -8,8 +8,10 @@ extension MapTECExtension on Map<String, TextEditingController> {
   ///   return map.numberOnly(['price', 'stock']).ucwords(['name']);
   /// });
   /// ```
-  Map<String, dynamic> toMap({Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
-    Map<String, dynamic> map = this.map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> toMap(
+      {Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
+    Map<String, dynamic> map =
+        this.map((key, value) => MapEntry(key, value.text));
 
     return manipulate == null ? map : manipulate(map);
   }
@@ -45,7 +47,8 @@ extension MapExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
-  Map<String, dynamic> currency([List<String> keys = const [], String prefix = '']) {
+  Map<String, dynamic> currency(
+      [List<String> keys = const [], String prefix = '']) {
     return map((key, value) {
       if (keys.contains(key)) {
         return MapEntry(key, value.toString().idr(symbol: prefix));

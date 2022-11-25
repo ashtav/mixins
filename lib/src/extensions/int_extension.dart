@@ -20,7 +20,9 @@ extension IntExtension on int {
 extension Uint8ListExtension on Uint8List {
   Future<File> toFile([String? filename]) async {
     final Directory tempDir = await getTemporaryDirectory();
-    File file = await File('${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png').create();
+    File file = await File(
+            '${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png')
+        .create();
     file.writeAsBytesSync(this);
 
     return file;

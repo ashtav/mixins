@@ -35,11 +35,18 @@ extension DynamicExtension on dynamic {
         default:
       }
 
-      bool allowDecimal = runtimeType == int || runtimeType == String && !contains('.');
+      bool allowDecimal =
+          runtimeType == int || runtimeType == String && !contains('.');
 
-      String result = NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
+      String result = NumberFormat.currency(
+              locale: 'id_ID',
+              decimalDigits: allowDecimal ? decimalDigits : 0,
+              symbol: symbol)
+          .format(int.parse(num));
 
-      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty
+          ? result
+          : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }

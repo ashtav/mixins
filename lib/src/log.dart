@@ -20,9 +20,11 @@ logg(dynamic value, {String color = 'y', int limit = 500, String? name}) {
 
   // max length
   String valueString = '$value';
-  String subStr = '$value'.substring(0, valueString.length > limit ? limit : valueString.length);
+  String subStr = '$value'
+      .substring(0, valueString.length > limit ? limit : valueString.length);
 
   // print on debug console
   String message = '\x1B[$colorCode$subStr\x1B[0m';
-  log(subStr.length < valueString.length ? '$message.....' : message, name: name ?? 'LOG');
+  log(subStr.length < valueString.length ? '$message.....' : message,
+      name: name ?? 'LOG');
 }
