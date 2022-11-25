@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
@@ -46,10 +44,10 @@ class HomePage extends StatelessWidget {
           InkW(
             onTap: () async {
               try {
-                File? myFile;
-                // do something...
-                String base64 = await Mixins.fileToBase64(myFile!);
-                File file = await Mixins.base64ToFile('BASE64-STRING');
+                // File? myFile;
+                // // do something...
+                // String base64 = await Mixins.fileToBase64(myFile!);
+                // File file = await Mixins.base64ToFile('BASE64-STRING');
               } catch (e, s) {
                 Mixins.errorCatcher(e, s);
               }

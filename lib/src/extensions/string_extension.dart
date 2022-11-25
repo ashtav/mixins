@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 extension StringExtension on String {
@@ -131,6 +133,51 @@ extension StringExtension on String {
     String dir = (await getApplicationDocumentsDirectory()).path;
     File file = File("$dir/${DateTime.now().millisecondsSinceEpoch}.png");
     return await file.writeAsBytes(uint8list);
+  }
+
+  /// ``` dart
+  /// Image file = await '<base64-string>'.base64ToImage();
+  /// ```
+  Future<Image> base64ToImage() async {
+    Uint8List uint8list = base64Decode(this);
+    return Image.memory(uint8list);
+  }
+
+  /// ``` dart
+  /// File file = await '<image-url>'.urlToFile();
+  /// ```
+  Future<File> urlToFile({String format = 'png'}) async {
+    // get temporary directory of device.
+    Directory tempDir = await getTemporaryDirectory();
+
+    // get temporary path from temporary directory.
+    String tempPath = tempDir.path;
+
+    // create a new file in temporary path with random file name.
+    File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
+
+    // call http.get method and pass imageUrl into it to get response.
+    http.Response response = await http.get(Uri.parse(this));
+
+    // write bodyBytes received in response to file.
+    await file.writeAsBytes(response.bodyBytes);
+
+    // now return the file which is created with random name in
+    // temporary directory and image bytes from response is written to // that file.
+    return file;
+  }
+
+  /// ``` dart
+  /// File file = await 'images/avatar.png'.imageToFile(); // from assets
+  /// ```
+  Future<File> imageToFile() async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    var bytes = await rootBundle.load('assets/${this}');
+    String tempPath = (await getTemporaryDirectory()).path;
+    File file = File('$tempPath/$fileName.png');
+    await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return file;
   }
 
   bool get isEmail => RegExp(

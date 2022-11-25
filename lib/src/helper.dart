@@ -297,7 +297,7 @@ class Mixins {
   /// ```dart
   /// File file = await Mixins.urlToFile('FILE-URL');
   /// ```
-  static Future<File> urlToFile(String imageUrl) async {
+  static Future<File> urlToFile(String imageUrl, {String format = 'png'}) async {
     try {
       // get temporary directory of device.
       Directory tempDir = await getTemporaryDirectory();
@@ -306,7 +306,7 @@ class Mixins {
       String tempPath = tempDir.path;
 
       // create a new file in temporary path with random file name.
-      File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.png');
+      File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
 
       // call http.get method and pass imageUrl into it to get response.
       http.Response response = await http.get(Uri.parse(imageUrl));
@@ -325,7 +325,6 @@ class Mixins {
   /// ```dart
   /// String base64 = await Mixins.fileToBase64(file);
   /// ```
-  @Deprecated('Use await <your-file>.toBase64()')
   static Future<String> fileToBase64(File file) async {
     try {
       String base64Image = base64Encode(file.readAsBytesSync());
@@ -338,7 +337,6 @@ class Mixins {
   /// ```dart
   /// File file = await Mixins.base64ToFile('BASE64-STRING');
   /// ```
-  @Deprecated('Use File file = await \'<base64-string>\'.base64ToFile()')
   static Future<File> base64ToFile(String base64) async {
     try {
       Uint8List uint8list = base64Decode(base64);
@@ -363,12 +361,14 @@ class Mixins {
   }
 
   /// ```dart
-  /// File file = await Mixins.imageToFile('avatar.png');
+  /// File file = await 'images/avatar.png'.imageToFile(); // from assets
   /// ```
   static Future<File> imageToFile(String imageName) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
     var bytes = await rootBundle.load('assets/$imageName');
     String tempPath = (await getTemporaryDirectory()).path;
-    File file = File('$tempPath/profile.png');
+    File file = File('$tempPath/$fileName.png');
     await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
   }

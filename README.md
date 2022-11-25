@@ -186,6 +186,15 @@ File file = await [].toFile();
 // convert Base64 to File
 File file = await '<base64-string>'.base64ToFile();
 
+// convert Base64 to Image
+Image file = await '<base64-string>'.base64ToImage();
+
+// convert asset image to File
+File file = await 'images/avatar.png'.imageToFile(); // from assets
+
+// convert network image to File
+File file = await '<image-url>'.urlToFile();
+
 /*
 |----------------------------------------
 | DATE & TIME
