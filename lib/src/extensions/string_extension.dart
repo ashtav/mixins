@@ -49,9 +49,7 @@ extension StringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '!';
@@ -63,9 +61,7 @@ extension StringExtension on String {
   /// ```
   String removeStringBefore(String pattern, {bool includePattern = false}) {
     try {
-      return !includePattern
-          ? substring(lastIndexOf(pattern))
-          : substring(lastIndexOf(pattern) + pattern.length);
+      return !includePattern ? substring(lastIndexOf(pattern)) : substring(lastIndexOf(pattern) + pattern.length);
     } catch (e) {
       return this;
     }
@@ -77,11 +73,7 @@ extension StringExtension on String {
   String removeStringAfter(String pattern, {bool includePattern = false}) {
     try {
       if (indexOf(pattern) == -1) return this;
-      return substring(
-          0,
-          !includePattern
-              ? indexOf(pattern) + pattern.length
-              : indexOf(pattern));
+      return substring(0, !includePattern ? indexOf(pattern) + pattern.length : indexOf(pattern));
     } catch (e) {
       return this;
     }
@@ -92,18 +84,27 @@ extension StringExtension on String {
   /// ```
   String removeStringBetween(String start, String end) {
     try {
-      return replaceAll(RegExp('$start.*$end'), '');
+      int startIndex = indexOf(start);
+      int endIndex = indexOf(end);
+
+      String beforeBracket = substring(0, startIndex);
+      String afterBracket = substring(endIndex + end.length);
+
+      return beforeBracket + afterBracket;
     } catch (e) {
       return this;
     }
   }
 
   /// ``` dart
-  /// 'lorem ipsum dolor'.getStringBetween('lorem','ipsum'); // ipsum
+  /// 'lorem ipsum dolor'.getStringBetween('lorem','dolor'); // ipsum
   /// ```
   String getStringBetween(String start, String end) {
     try {
-      return RegExp('$start(.*)$end').stringMatch(this) ?? '';
+      int startIndex = indexOf(start);
+      int endIndex = indexOf(end);
+
+      return substring(startIndex + start.length, endIndex);
     } catch (e) {
       return '';
     }
@@ -162,8 +163,7 @@ extension StringExtension on String {
     String tempPath = tempDir.path;
 
     // create a new file in temporary path with random file name.
-    File file =
-        File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
+    File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
 
     // call http.get method and pass imageUrl into it to get response.
     http.Response response = await http.get(Uri.parse(this));
@@ -185,8 +185,7 @@ extension StringExtension on String {
     var bytes = await rootBundle.load('assets/${this}');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/$fileName.png');
-    await file.writeAsBytes(
-        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
   }
 
@@ -194,7 +193,5 @@ extension StringExtension on String {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
       .hasMatch(this);
 
-  bool get isUrl => RegExp(
-          r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$')
-      .hasMatch(this);
+  bool get isUrl => RegExp(r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$').hasMatch(this);
 }

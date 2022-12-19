@@ -6,6 +6,6 @@ extension ContextExtension on BuildContext {
   EdgeInsets get padding => MediaQuery.of(this).padding;
   EdgeInsets get viewPadding => MediaQuery.of(this).viewPadding;
 
-  void focus(FocusNode node) => FocusScope.of(this).requestFocus(node);
+  void focus([FocusNode? node]) => FocusScope.of(this).requestFocus(node ?? FocusNode());
   void pop([dynamic result]) => Navigator.pop(this, result);
 }

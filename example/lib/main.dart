@@ -35,8 +35,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: Maa.center,
         children: [
           Container(
-            decoration:
-                BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
+            decoration: BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
             child: Textr(
               'Hello World',
               padding: Ei.sym(v: 10, h: 25),
@@ -44,12 +43,7 @@ class HomePage extends StatelessWidget {
           ),
           InkW(
             onTap: () async {
-              try {
-                // File? myFile;
-                // // do something...
-                // String base64 = await Mixins.fileToBase64(myFile!);
-                // File file = await Mixins.base64ToFile('BASE64-STRING');
-              } catch (e, s) {
+              try {} catch (e, s) {
                 Mixins.errorCatcher(e, s);
               }
             },
