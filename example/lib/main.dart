@@ -35,7 +35,8 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: Maa.center,
         children: [
           Container(
-            decoration: BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
+            decoration:
+                BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
             child: Textr(
               'Hello World',
               padding: Ei.sym(v: 10, h: 25),
