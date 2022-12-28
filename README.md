@@ -242,14 +242,15 @@ DateTime.now().weekOfYear // Get number of week in year
 
 Mixins.hex('fff'); // White
 Mixins.orientation([DeviceOrientation.landscapeLeft]); // Change device orientation
-Mixins.copy('<content>'); // copy text to clipboard
+Mixins.copy('<content>'); // Copy text to clipboard
 
 String? text;
 text.isNull // true, instead of text == null
 
 String? name;
-name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
+name.orIf('-', [null, '']) // It's mean if name is null or empty, then return '-'
 
+logg('lorem ipsum', color: 'r', limit: 1500); // Print in debug console
 ```
 
 ### Widgets
