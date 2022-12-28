@@ -65,10 +65,10 @@ extension DynamicExtension on dynamic {
 
   /// ``` dart
   /// String? name;
-  /// name.instead('-', [null, '']) // it's mean if name is null or empty, then return '-'
+  /// name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
   /// ```
   ///
-  dynamic instead([dynamic value = '-', List conditions = const [null, '']]) {
+  dynamic orIf([dynamic value = '-', List conditions = const [null, '']]) {
     return conditions.contains(this) ? value : this;
   }
 }

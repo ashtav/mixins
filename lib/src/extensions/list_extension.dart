@@ -17,12 +17,11 @@ extension ListNumExtension on List<num> {
   /// ```dart
   /// [10, 50].numInRange() // 30.5
   /// ```
-  num numInRange([Type type = double]) {
+  numInRange([Type type = double]) {
     if (isEmpty) return 0;
     num start = this[0], end = length > 1 ? this[1] : this[0];
     num result = start + (Random().nextDouble() * (end - start));
-
-    return type == int ? result = result.round() : result = result;
+    return result = type == int ? result.round() : result;
   }
 }
 
@@ -32,10 +31,7 @@ extension ListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];

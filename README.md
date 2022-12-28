@@ -9,26 +9,31 @@ To use this plugin, add `mixins` as a [dependency in your pubspec.yaml file](htt
 
 // without Mixins
 
-Column(
-    mainAxisAlignment: MainAxisAlignment.center
-    children: []
-)
-
 Container(
     margin: EdgeInsets.all(15),
     padding: EdgeInsets.symmetric(vertical: 15),
     decoration: BoxDecoration(
         border: Border(top: BorderSide(color: Colors.white)),
         borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+    child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+            Container(
+                padding: EdgeInsets.all(15),
+                child: Text('Hello!', textAlign: TextAlign.center)
+            ),
+
+            Container(
+                margin: EdgeInsets.only(right: 15),
+                child: Icon(Icons.search)
+            )
+        ]
     )
 )
 
 // with Mixins
-
-Column(
-    mainAxisAlignment: Maa.center 
-    children: []
-)
 
 Container(
     margin: Ei.all(15),
@@ -36,56 +41,67 @@ Container(
     decoration: BoxDecoration(
         border: Br.only(['t'], color: Colors.white),
         borderRadius: Br.radius(5)
+    ),
+    child: Column(
+        crossAxisAlignment: Caa.start,
+        mainAxisAlignment: Maa.center,
+        children: [
+            Textr('Hello!', textAlign: Ta.center, padding: Ei.all(15)),
+            Iconr(Icons.search, margin: Ei.only(r: 15))
+        ]
     )
 )
 
 ```
 
 ### Helpers
+Some functions you can use to simplify and shorten your code.
+
+##### Context
 
 ```dart 
-
-/*
-|----------------------------------------
-| CONTEXT
-|----------------------------------------
-*/
-
 context.height // get height of screen
 context.width // get width of screen
 context.padding // EdgeInsets
 context.viewPadding // EdgeInsets
 context.focus(FocusNode()) // set or unset focus
+```
 
-/*
-|----------------------------------------
-| NUMBER & RANDOM
-|----------------------------------------
-*/
+##### Number
 
+```dart 
 [50, 100].numInRange(double) // generate float number between 50 - 100
 [50, 100].numInRange(int) // generate integer number between 50 - 100
 
 Mixins.randNum(18); // generate random int value, max length is 18
 Mixins.randString(10); // generate random string value
 
-/*
-|----------------------------------------
-| LIST
-|----------------------------------------
-*/
+1500.idr() // convert to IDR currency, Rp1.500
+// Another example '2.500'.idr() -> Rp2.500, 3500.15.idr() -> Rp3.500,15
 
+'45'.isNumeric // true
+344.isNumeric // true
+
+99025.formatBytes() // 96.7 KB
+```
+
+##### List or Array
+
+```dart 
 ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
-[10, 50].numInRange() // 30.5
 
-[{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}].groupBy('date')
+/* ----------------------------------------
+| Grouping List<Map>
+-------------------------------- */
+
+List<Map> data = [{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}]
+List<Map> group = data.groupBy('date')
 // result: [{'2022-01-01': [{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}]}]
+```
 
-/*
-|----------------------------------------
-| STRING
-|----------------------------------------
-*/
+##### String
+
+```dart 
 
 'john doe'.ucwords // John Doe
 'lipsum99'.getNumberOnly // 99
@@ -96,24 +112,25 @@ Mixins.randString(10); // generate random string value
 'lorem ipsum dolor'.getStringBetween('lorem','ipsum'); // ipsum
 '<h1>Hello World</h1>'.removeHtmlTag; // Hello World
 '{}'.isJson; // true
+```
 
-/*
-|----------------------------------------
-| MAP
-|----------------------------------------
-*/
+##### Map
+
+```dart 
 
 Map<String, TextEditingController> forms = {'name': TextEditingController()}
 Map<String, dynamic> data = forms.toMap(manipulate: (map) {
     return map.numberOnly(['price', 'stock']).ucwords(['name']);
 });
+```
 
+##### Scroll
 
-/*
-|----------------------------------------
-| SCROLL TO WIDGET
-|----------------------------------------
-*/
+```dart 
+
+/* ----------------------------------------
+| Scroll to Widget
+-------------------------------- */
 
 ListView(
     controller: yourScrollController,
@@ -127,109 +144,101 @@ ListView(
 double size = context.width; // width or height
 Mixins.scrollToWidget(yourGlobalKey, yourScrollController, size);
 
-// scroll to TOP OR BOTTOM
+/* ----------------------------------------
+| Scroll to TOP or BOTTOM
+-------------------------------- */
+
 Mixins.scrollTo(scroll, to: AxisDirection.up);
 
-/*
-|----------------------------------------
-| MAX & MIN SCROLL
-|----------------------------------------
-*/
+/* ----------------------------------------
+| Max & Min Scroll
+-------------------------------- */
 
 List max = [10, 50]; // [top, bottom]
 double max = 50; // top and bottom
 
 bool hasMax = Mixins.scrollHasMax(scrollController, max);
 
-// for example:
+// For example:
 void yourScrollListener() {
     double pixel = scrollController.position.pixels;
 
     if (Mixins.scrollHasMax(scrollController, [20, 50])) {
-        scrollController.animateTo(pixel, duration: const Duration(milliseconds: 250), curve: Curves.easeInBack);
+        scrollController.animateTo(
+            pixel,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInBack
+        );
     }
 }
+```
 
-/*
-|----------------------------------------
-| STATUS BAR
-|----------------------------------------
-*/
+##### Status Bar
 
-Mixins.statusBar(true); // show or hide status bar
-Mixins.setSystemUI(navBarColor: Colors.white); // change status bar or navigation bar color
+```dart 
 
-/*
-|----------------------------------------
-| IMAGES
-|----------------------------------------
-*/
+Mixins.statusBar(true); // Show or hide status bar
+Mixins.setSystemUI(navBarColor: Colors.white); // Change status bar or navigation bar color
+```
 
-// convert base64 to file
+##### Images, Files
+
+```dart 
+
+// Convert base64 to file
 File file = Mixins.base64ToFile('<your base64 string>');
 
-// convert base64 to image
+// Convert base64 to image
 File file = Mixins.base64ToImage('<your base64 string>');
 
-// convert image to file
+// Convert image to file
 Mixins.imageToFile('images/item.png')
 
-// convert image url to file
+// Convert image url to file
 Mixins.urlToFile('<your image url>')
 
-// convert File to Base64
+// Convert File to Base64
 Mixins.fileToBase64(file);
 
-// convert Uint8List to File
+// Convert Uint8List to File
 File file = await [].toFile();
 
-// convert Base64 to File
+// Convert Base64 to File
 File file = await '<base64-string>'.base64ToFile();
 
-// convert Base64 to Image
+// Convert Base64 to Image
 Image file = await '<base64-string>'.base64ToImage();
 
-// convert asset image to File
+// Convert asset image to File
 File file = await 'images/avatar.png'.imageToFile(); // from assets
 
-// convert network image to File
+// Convert network image to File
 File file = await '<image-url>'.urlToFile();
+```
 
-/*
-|----------------------------------------
-| DATE & TIME
-|----------------------------------------
-*/
+##### Date & Time
+
+```dart 
 
 String date = Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Saturday, 20 March 2021
-DateTime.now().format('dd/MM/yyyy')
+DateTime.now().format('dd/MM/yyyy') // Date format
 
-DateTime.now().weekOfMonth // get number of week in month
-DateTime.now().weekOfYear // get number of week in year
+DateTime.now().weekOfMonth // Get number of week in month
+DateTime.now().weekOfYear // Get number of week in year
+```
 
-/*
-|----------------------------------------
-| OTHERS
-|----------------------------------------
-*/
+##### Others
 
-Mixins.hex('fff'); // white
-Mixins.orientation([DeviceOrientation.landscapeLeft]);
+```dart 
 
-Mixins.copy('<your token here>'); // copy text to clipboard
-
-1500.idr() // convert to IDR currency, Rp1.500
-// Another example '2.500'.idr() -> Rp2.500, 3500.15.idr() -> Rp3.500,15
-
-'45'.isNumeric // true
-344.isNumeric // true
+Mixins.hex('fff'); // White
+Mixins.orientation([DeviceOrientation.landscapeLeft]); // Change device orientation
+Mixins.copy('<content>'); // copy text to clipboard
 
 String? text;
 text.isNull // true, instead of text == null
 
-99025.formatBytes() // 96.7 KB
-
 String? name;
-name.instead('-', [null, '']) // it's mean if name is null or empty, then return '-'
+name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
 
 ```
