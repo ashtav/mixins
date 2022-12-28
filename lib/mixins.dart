@@ -15,6 +15,7 @@ export 'src/extensions/list_extension.dart';
 export 'src/extensions/map_extension.dart';
 export 'src/extensions/string_extension.dart';
 export 'src/formatter.dart';
+export 'src/forms.dart';
 export 'src/helper.dart';
 export 'src/lipsum.dart';
 export 'src/log.dart';

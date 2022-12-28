@@ -112,6 +112,8 @@ List<Map> group = data.groupBy('date')
 'lorem ipsum dolor'.getStringBetween('lorem','ipsum'); // ipsum
 '<h1>Hello World</h1>'.removeHtmlTag; // Hello World
 '{}'.isJson; // true
+
+Lipsum.createWord(15) // generate dummy text
 ```
 
 ##### Map
@@ -122,6 +124,13 @@ Map<String, TextEditingController> forms = {'name': TextEditingController()}
 Map<String, dynamic> data = forms.toMap(manipulate: (map) {
     return map.numberOnly(['price', 'stock']).ucwords(['name']);
 });
+
+/* ----------------------------------------
+| Map, TextEditingController & FocusNode
+-------------------------------- */
+
+Map<String, TextEditingController> forms = Forms.create(['name', {'stock': 1}]) // Only String and Map are allowed
+Map<String, FocusNode> nodes = Forms.createNodes(['name', 'stock'])
 ```
 
 ##### Scroll
@@ -240,5 +249,46 @@ text.isNull // true, instead of text == null
 
 String? name;
 name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
+
+```
+
+### Widgets
+Some widgets you can use to simplify and shorten your code.
+
+```dart 
+// 1. Wrapper
+// set unfocus on tap outside of TextField
+Wrapper(child: Scaffold())
+
+// 2. BounceScroll
+ListView(physics: BounceScroll())
+
+// 3. CenterDialog
+showDialog(context: context, builder: (_) => CenterDialog(child: child))
+
+// 4. Intrinsic
+// Shortcut of `IntrinsicHeight` widget
+Intrinsic(children: List.generate(3, (i) => Expanded(child: child)))
+
+// 5. Skeleton
+Skeleton(size: 15); // width and height is 15
+Skeleton(size: [50, 15]); // width is 50, height is 15
+Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
+Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
+
+// 6. None
+// Shortcut of `SizedBox.shrink()`
+Container(child: const None())
+
+// 7. Touch
+// Short hand to use GestureDetector with translucent behavior
+Touch(onTap: () {}, child: child)
+
+// 8. InkW
+// Custom widget of `InkWell`
+InkW(onTap: (){}, child: child)
+
+// 9. Textr & Iconr
+// It's combination between Text or Icon and Container
 
 ```
