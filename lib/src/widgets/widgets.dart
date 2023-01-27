@@ -12,16 +12,7 @@ class Iconr extends StatelessWidget {
   final Color? color;
   final double? size;
 
-  const Iconr(this.icon,
-      {Key? key,
-      this.margin,
-      this.padding,
-      this.width,
-      this.radius,
-      this.color,
-      this.size,
-      this.alignment,
-      this.border})
+  const Iconr(this.icon, {Key? key, this.margin, this.padding, this.width, this.radius, this.color, this.size, this.alignment, this.border})
       : super(key: key);
 
   @override
@@ -76,12 +67,7 @@ class Textr extends StatelessWidget {
       margin: margin,
       width: width,
       decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: Text(text,
-          style: style,
-          textAlign: textAlign,
-          overflow: overflow,
-          softWrap: softwrap,
-          maxLines: maxLines),
+      child: Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
     );
   }
 }
@@ -116,12 +102,7 @@ class Col extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
 
-  const Col(
-      {Key? key,
-      required this.children,
-      this.mainAxisAlignment = Maa.start,
-      this.mainAxisSize = Mas.min})
-      : super(key: key);
+  const Col({Key? key, required this.children, this.mainAxisAlignment = Maa.start, this.mainAxisSize = Mas.min}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -144,12 +125,7 @@ class CenterDialog extends StatelessWidget {
   final double margin;
   final BorderRadius? borderRadius;
 
-  const CenterDialog(
-      {Key? key,
-      required this.child,
-      this.margin = 15,
-      this.borderRadius = BorderRadius.zero})
-      : super(key: key);
+  const CenterDialog({Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -158,10 +134,7 @@ class CenterDialog extends StatelessWidget {
       child: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Material(
-            color: Colors.transparent,
-            child: Container(
-                margin: EdgeInsets.all(margin),
-                child: ClipRRect(borderRadius: borderRadius, child: child)))
+            color: Colors.transparent, child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child)))
       ])),
     );
   }
@@ -172,9 +145,7 @@ class Intrinsic extends StatelessWidget {
   final List<Widget> children;
   final Axis axis;
 
-  const Intrinsic(
-      {Key? key, required this.children, this.axis = Axis.horizontal})
-      : super(key: key);
+  const Intrinsic({Key? key, required this.children, this.axis = Axis.horizontal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => IntrinsicHeight(
@@ -240,16 +211,10 @@ class InkW extends StatelessWidget {
               onLongPress: onLongPress,
               splashColor: !enableSplash
                   ? Colors.transparent
-                  : splash ??
-                      (color == null || !splashByBaseColor
-                          ? const Color.fromRGBO(0, 0, 0, .03)
-                          : color?.withOpacity(.08)),
+                  : splash ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.08)),
               highlightColor: !enableSplash
                   ? Colors.transparent
-                  : highlightColor ??
-                      (color == null || !splashByBaseColor
-                          ? const Color.fromRGBO(0, 0, 0, .03)
-                          : color?.withOpacity(.1)),
+                  : highlightColor ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.1)),
               onTap: onTap,
               borderRadius: borderRadius,
               child: Container(
@@ -277,22 +242,12 @@ class Touch extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? margin;
 
-  const Touch(
-      {Key? key,
-      required this.child,
-      this.onTap,
-      this.onDoubleTap,
-      this.margin})
-      : super(key: key);
+  const Touch({Key? key, required this.child, this.onTap, this.onDoubleTap, this.margin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        key: key,
-        onTap: onTap,
-        onDoubleTap: onDoubleTap,
-        behavior: HitTestBehavior.translucent,
-        child: Container(margin: margin, child: child));
+        key: key, onTap: onTap, onDoubleTap: onDoubleTap, behavior: HitTestBehavior.translucent, child: Container(margin: margin, child: child));
   }
 }
 
@@ -304,91 +259,63 @@ class None extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox.shrink(key: key);
 }
 
-/// ``` dart
-/// Skeleton(size: 15); // width and height is 15
-/// Skeleton(size: [50, 15]); // width is 50, height is 15
-/// Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
-/// Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
+/// ```dart
+/// ScrollConfiguration(
+///   behavior: NoScrollGlow(), // Prevent scroll glow effect
+///   child: ListView(
+///    ...
+///   ),
+/// )
 /// ```
-class Skeleton extends StatelessWidget {
-  final Color baseColor, highlightColor, color;
-  final double radius;
-  final EdgeInsets? margin;
-  final bool darkMode;
-
-  /// [width, height], or [width:[min, max], height:[min, max]]
-  final dynamic size;
-
-  const Skeleton(
-      {Key? key,
-      this.baseColor = Colors.black26,
-      this.highlightColor = Colors.black12,
-      this.color = Colors.black54,
-      this.margin,
-      this.size = const [50, 15],
-      this.radius = 0,
-      this.darkMode = false})
-      : super(key: key);
-
+class NoScrollGlow extends ScrollBehavior {
   @override
-  Widget build(BuildContext context) {
-    // default size
-    num minW = 50, maxW = 50;
-    num minH = 15, maxH = 15;
-
-    bool isSizeList = size is List;
-
-    if (isSizeList) {
-      List sizes = size;
-
-      // size.length < 2, eg: [50]
-      if (size.length < 2) sizes = [size[0], size[0]];
-
-      bool isSizeWList = sizes[0] is List, isSizeHList = sizes[1] is List;
-
-      // width
-      if (isSizeWList) {
-        minW = sizes[0][0];
-        maxW = sizes[0][1];
-      } else {
-        minW = sizes[0];
-        maxW = sizes[0];
-      }
-
-      // height
-      if (isSizeHList) {
-        minH = sizes[1][0];
-        maxH = sizes[1][1];
-      } else {
-        minH = sizes[1];
-        maxH = sizes[1];
-      }
-    } else {
-      minW = maxW = minH = maxH = (size is int) ? size.toDouble() : size;
-    }
-
-    return Container(
-      margin: margin,
-      child: Shimmer.fromColors(
-        baseColor: baseColor,
-        highlightColor:
-            darkMode ? Colors.white.withOpacity(.5) : highlightColor,
-        child: Container(
-          width: [minW, maxW].numInRange() as double,
-          height: [minH, maxH].numInRange() as double,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(radius)),
-        ),
-      ),
-    );
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }
 
-class NoScrollGlow extends ScrollBehavior {
+class NoData extends StatelessWidget {
+  final IconData? icon;
+  final String? title, onTapMessage;
+  final Function()? onTap;
+  const NoData({super.key, this.icon, this.title, this.onTapMessage, this.onTap});
+
   @override
-  Widget buildOverscrollIndicator(
-      BuildContext context, Widget child, ScrollableDetails details) {
-    return child;
+  Widget build(BuildContext context) {
+    Color primaryColor = MixinConfig.getConfig.primaryColor;
+    String title = this.title ?? MixinConfig.getConfig.widgets['no_data']?['title'] ?? 'No Data';
+    String onTapMessage = this.onTapMessage ?? MixinConfig.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
+
+    return Container(
+      padding: Ei.all(20),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: Maa.center,
+          children: [
+            Iconr(
+              icon ?? Icons.info_outline,
+              color: Colors.black38,
+              size: 50,
+              margin: Ei.only(b: 25),
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.black54),
+              textAlign: Ta.center,
+            ),
+            onTap.isNull
+                ? const None()
+                : Touch(
+                    onTap: onTap,
+                    child: Textr(
+                      onTapMessage,
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(color: primaryColor, fontWeight: Fw.bold),
+                      padding: Ei.sym(v: 7, h: 20),
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
   }
 }

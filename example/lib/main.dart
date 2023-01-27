@@ -1,8 +1,24 @@
+import 'package:example/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
+import 'pages/form_view.dart';
+
 void main() {
   Mixins.setSystemUI(navBarColor: Colors.white);
+
+  // set mixins config
+  MixinConfig.setConfig = MixinConfig(widgets: {
+    'confirm': {
+      'cancel': 'Batal',
+      'confirm': 'Ya',
+    },
+    'no_data': {
+      'title': 'Sing Ade Ape!',
+      'subtitle': 'No Data Available',
+    },
+  });
+
   runApp(const MyApp());
 }
 
@@ -11,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Welcome to Mixins', home: HomePage());
+    return MaterialApp(title: 'Welcome to Mixins', theme: appTheme, home: const HomePage());
   }
 }
 
@@ -29,14 +45,29 @@ class HomePage extends StatelessWidget {
         ),
         elevation: .5,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+              onPressed: () {
+                MixinsDropdown.open(context,
+                    options: List.generate(4, (index) => 'Option $index'),
+                    offset: const Offset(20, 25),
+                    disableds: [2],
+                    dangers: [1], onSelect: (o, i) {
+                  logg(o);
+                });
+              },
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black87,
+              ))
+        ],
       ),
       body: Center(
           child: Column(
         mainAxisAlignment: Maa.center,
         children: [
           Container(
-            decoration:
-                BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
+            decoration: BoxDecoration(border: Br.only(['b'], color: Colors.black12)),
             child: Textr(
               'Hello World',
               padding: Ei.sym(v: 10, h: 25),
@@ -44,7 +75,19 @@ class HomePage extends StatelessWidget {
           ),
           InkW(
             onTap: () async {
-              try {} catch (e, s) {
+              try {
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const FormView(),
+                ));
+
+                // Confirm(
+                //     icon: Icons.info_outline_rounded,
+                //     title: 'Confirmation',
+                //     message: 'Are you sure to confirm this?',
+                //     onConfirm: (ok) {
+                //       logg(ok);
+                //     }).show(context);
+              } catch (e, s) {
                 Mixins.errorCatcher(e, s);
               }
             },
