@@ -446,10 +446,13 @@ class SelectInputPicker extends StatelessWidget {
           Positioned.fill(
               child: Align(
                   alignment: Alignment.topLeft,
-                  child: Iconr(
-                    La.bars,
-                    color: Colors.black54,
-                    padding: Ei.all(20),
+                  child: Touch(
+                    onTap: () => Navigator.pop(context),
+                    child: Iconr(
+                      La.bars,
+                      color: Colors.black54,
+                      padding: Ei.all(20),
+                    ),
                   )))
         ],
       ),
