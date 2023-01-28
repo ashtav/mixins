@@ -6,12 +6,29 @@ class FormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController item = TextEditingController(),
-        price = TextEditingController(),
-        category = TextEditingController(),
-        kind = TextEditingController();
+    TextEditingController name = TextEditingController(),
+        phone = TextEditingController(),
+        gender = TextEditingController(),
+        city = TextEditingController(),
+        hobby = TextEditingController(text: 'Hot, Salty');
 
-    List<String> options = ['Food', 'Drink', 'Snack', 'Medicine', 'Alcohol', 'Other'];
+    List<String> cities = [
+      'Denpasar',
+      'Badung',
+      'Tabanan',
+      'Singaraja',
+      "Negare",
+      'Jembrana'
+    ];
+
+    List<String> hobbies = [
+      'Footbal',
+      'Killing',
+      'Drawing',
+      'Reading',
+      'Music',
+      'Writing'
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -21,34 +38,49 @@ class FormView extends StatelessWidget {
         physics: BounceScroll(),
         padding: Ei.all(20),
         children: [
-          TextInput(
-            label: 'Item Name',
-            hint: 'Input item name',
-            controller: item,
-            indicator: true,
+          // Forms.input()
+          // Forms.select(onChanged: (o, i) => {})
+          // Forms.radio() Forms.checkbox() Forms.switch()
+
+          FormsGroup(children: [
+            Forms.input(
+              label: 'Your Name',
+              hint: 'Input your name',
+              controller: name,
+              indicator: true,
+            ),
+            Forms.input(
+                label: 'Phone',
+                hint: 'Input phone number',
+                controller: phone,
+                keyboard: Tit.number),
+            Forms.radio(
+                label: 'Gender',
+                options: const ['Male', 'Female'],
+                controller: gender),
+            Forms.checkbox(
+                label: 'Hobby',
+                options: hobbies,
+                controller: hobby,
+                disabled: const [1, 3]),
+          ]),
+
+          Forms.select(
+            label: 'City',
+            hint: 'Select your city',
+            controller: city,
+            options:
+                List.generate(cities.length, (i) => Option(option: cities[i])),
           ),
-          TextInput(
-            label: 'Item Price',
-            hint: 'Input item price',
-            controller: price,
-            keyboard: Tit.number,
-          ),
-          SelectInput(
-            label: 'Category',
-            hint: 'Select category',
-            controller: category,
-            options: List.generate(options.length, (i) => Option(option: options[i])),
-          ),
-          RadioInput(label: 'Item Option', options: options, controller: kind, disabled: [2])
+
+          Forms.switches(
+            label: 'Available|Not Available',
+            onChanged: (value) {},
+          )
         ],
       ),
       bottomNavigationBar: InkW(
-        onTap: () {
-          logg(item.text);
-          logg(price.text);
-          logg(category.text);
-          logg(kind.text);
-        },
+        onTap: () {},
         padding: Ei.all(20),
         child: const Text('Submit'),
       ),

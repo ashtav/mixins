@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mixins/mixins.dart';
 
 class ItemView extends StatelessWidget {
@@ -31,7 +30,10 @@ class Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkW(
       onTap: () {
-        MixinsDropdown.open(context, options: List.generate(4, (index) => 'Option $index'), disableds: [2], dangers: [1], onSelect: (o, i) {
+        MixinsDropdown.open(context,
+            options: List.generate(4, (index) => 'Option $index'),
+            disableds: [2],
+            dangers: [1], onSelect: (o, i) {
           logg(o);
         });
       },
@@ -40,7 +42,7 @@ class Item extends StatelessWidget {
       border: Br.only(['t'], except: index == 0),
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
-        children: [Textr('Item $index'), Icon(Icons.more_vert)],
+        children: [Textr('Item $index'), const Icon(Icons.more_vert)],
       ),
     );
   }

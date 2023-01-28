@@ -9,7 +9,11 @@ class CaretPainter extends CustomPainter {
   final double strokeWidth;
   final int skew;
 
-  CaretPainter({this.strokeColor = Colors.black, this.strokeWidth = 3, this.paintingStyle = PaintingStyle.stroke, this.skew = 2});
+  CaretPainter(
+      {this.strokeColor = Colors.black,
+      this.strokeWidth = 3,
+      this.paintingStyle = PaintingStyle.stroke,
+      this.skew = 2});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -31,7 +35,9 @@ class CaretPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CaretPainter oldDelegate) {
-    return oldDelegate.strokeColor != strokeColor || oldDelegate.paintingStyle != paintingStyle || oldDelegate.strokeWidth != strokeWidth;
+    return oldDelegate.strokeColor != strokeColor ||
+        oldDelegate.paintingStyle != paintingStyle ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }
 
@@ -61,14 +67,16 @@ class DropdownPositioned extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     // check if dropdown is out of screen
-    double optionHeight = (options.length * 47) + 50; // 50 = height of bottom navigation bar
+    double optionHeight =
+        (options.length * 47) + 50; // 50 = height of bottom navigation bar
     // double pos = offset.dy + optionHeight;
 
     double maxHeight = screenHeight * .4;
     bool isMaxHeight = optionHeight > maxHeight;
 
     optionHeight = (isMaxHeight ? maxHeight : optionHeight);
-    bool isOutOfScreen = offset.dy + optionHeight > screenHeight - 50; // 50 = height of bottom navigation bar
+    bool isOutOfScreen = offset.dy + optionHeight >
+        screenHeight - 50; // 50 = height of bottom navigation bar
 
     bool isTriangle = caret == DropdownCaret.triangle;
     double caretSize = isTriangle ? 15 : 15;
@@ -89,7 +97,9 @@ class DropdownPositioned extends StatelessWidget {
     );
 
     double dy = offset.dy + 32;
-    double itemPosition = !isOutOfScreen ? dy - 10 : dy - (isMaxHeight ? (maxHeight + itemHeight) : optionHeight + 13);
+    double itemPosition = !isOutOfScreen
+        ? dy - 10
+        : dy - (isMaxHeight ? (maxHeight + itemHeight) : optionHeight + 13);
 
     return Stack(
       children: [
@@ -110,7 +120,8 @@ class DropdownPositioned extends StatelessWidget {
                           : SlideUp(delay: 150, child: caretWidget),
                 ),
                 Container(
-                  margin: Ei.only(t: isOutOfScreen ? 0 : 10, b: isOutOfScreen ? 10 : 0),
+                  margin: Ei.only(
+                      t: isOutOfScreen ? 0 : 10, b: isOutOfScreen ? 10 : 0),
                   child: ClipRRect(
                     borderRadius: borderRadius ?? Br.radius(2),
                     child: AnimatedContainer(
@@ -123,7 +134,9 @@ class DropdownPositioned extends StatelessWidget {
                           child: Col(
                             children: List.generate(options.length, (i) {
                               return SlideLeft(
-                                delay: isOutOfScreen ? ((3 - i) * 50) : (i + 1) * 50,
+                                delay: isOutOfScreen
+                                    ? ((3 - i) * 50)
+                                    : (i + 1) * 50,
                                 child: InkW(
                                   onTap: disabled.contains(i)
                                       ? null
@@ -135,23 +148,32 @@ class DropdownPositioned extends StatelessWidget {
                                   border: Br.only(['t'], except: i == 0),
                                   child: Container(
                                     padding: Ei.sym(v: 15, h: 20),
-                                    constraints: const BoxConstraints(minWidth: 200),
+                                    constraints:
+                                        const BoxConstraints(minWidth: 200),
                                     child: Opacity(
                                       opacity: disabled.contains(i) ? .5 : 1,
                                       child: Row(
                                         children: [
-                                          icons.length == options.length && icons[i] != null
+                                          icons.length == options.length &&
+                                                  icons[i] != null
                                               ? Iconr(
                                                   icons[i]!,
                                                   margin: Ei.only(r: 15, b: 4),
-                                                  color: dangers.contains(i) ? Colors.redAccent : Colors.black54,
+                                                  color: dangers.contains(i)
+                                                      ? Colors.redAccent
+                                                      : Colors.black54,
                                                 )
                                               : const None(),
                                           Flexible(
                                             child: Textr(
                                               options[i],
-                                              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                                                    color: dangers.contains(i) ? Colors.redAccent : Colors.black54,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2
+                                                  ?.copyWith(
+                                                    color: dangers.contains(i)
+                                                        ? Colors.redAccent
+                                                        : Colors.black54,
                                                   ),
                                               padding: Ei.only(r: 10),
                                             ),
@@ -205,7 +227,7 @@ class MixinsDropdown extends StatelessWidget {
       Offset? offset,
       BorderRadiusGeometry? borderRadius,
       DropdownCaret? caret,
-      Function? Function(String value, int index)? onSelect}) {
+      void Function(String value, int index)? onSelect}) {
     if (options.isEmpty) return;
 
     final RenderBox? box = context.findRenderObject() as RenderBox?;
