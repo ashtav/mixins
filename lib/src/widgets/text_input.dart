@@ -459,3 +459,97 @@ class SelectInputPicker extends StatelessWidget {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| RadioInput
+| -------------------------------------------------------- */
+
+class RadioInput extends StatefulWidget {
+  final String label;
+  final List<String> options;
+  final List<int> disabled;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  const RadioInput({super.key, required this.label, this.options = const [], this.disabled = const [], this.controller, this.onChanged});
+
+  @override
+  State<RadioInput> createState() => _RadioInputState();
+}
+
+class _RadioInputState extends State<RadioInput> {
+  String selected = '';
+
+  @override
+  void initState() {
+    super.initState();
+    selected = widget.options.first;
+    widget.controller?.text = selected;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String label = widget.label;
+    List<String> options = widget.options;
+
+    void onChanged(String value) {
+      setState(() {
+        selected = value;
+        widget.controller?.text = value;
+      });
+
+      widget.onChanged?.call(value);
+    }
+
+    return Container(
+      padding: Ei.only(l: 15, r: 15, t: 15, b: 10),
+      decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Colors.black12, width: .7), borderRadius: Br.radius(2)),
+      child: Col(
+        children: [
+          Container(
+            margin: Ei.only(b: 8),
+            child: Row(
+              mainAxisAlignment: Maa.spaceBetween,
+              children: [
+                Text(label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
+              ],
+            ),
+          ),
+          Wrap(
+            children: List.generate(options.length, (i) {
+              bool isDisabled = widget.disabled.contains(i);
+
+              return InkW(
+                onTap: isDisabled ? null : () => onChanged(options[i]),
+                margin: Ei.only(r: 10, b: 5),
+                padding: Ei.only(r: 10),
+                borderRadius: Br.radius(15),
+                child: Opacity(
+                  opacity: isDisabled ? .5 : 1,
+                  child: IgnorePointer(
+                    ignoring: isDisabled,
+                    child: Row(
+                      mainAxisSize: Mas.min,
+                      children: [
+                        Radio(
+                          value: options[i],
+                          groupValue: selected,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity, vertical: VisualDensity.minimumDensity),
+                          onChanged: (value) => onChanged((value ?? options.first) as String),
+                        ),
+                        Textr(
+                          widget.options[i],
+                          margin: Ei.only(l: 10),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}

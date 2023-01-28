@@ -6,7 +6,10 @@ class FormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController item = TextEditingController(), price = TextEditingController(), category = TextEditingController();
+    TextEditingController item = TextEditingController(),
+        price = TextEditingController(),
+        category = TextEditingController(),
+        kind = TextEditingController();
 
     List<String> options = ['Food', 'Drink', 'Snack', 'Medicine', 'Alcohol', 'Other'];
 
@@ -36,7 +39,18 @@ class FormView extends StatelessWidget {
             controller: category,
             options: List.generate(options.length, (i) => Option(option: options[i])),
           ),
+          RadioInput(label: 'Item Option', options: options, controller: kind, disabled: [2])
         ],
+      ),
+      bottomNavigationBar: InkW(
+        onTap: () {
+          logg(item.text);
+          logg(price.text);
+          logg(category.text);
+          logg(kind.text);
+        },
+        padding: Ei.all(20),
+        child: const Text('Submit'),
       ),
     );
   }
