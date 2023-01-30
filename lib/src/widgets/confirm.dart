@@ -39,6 +39,7 @@ class Confirm extends StatelessWidget {
       borderRadius: borderRadius ?? Br.radius(radius),
       child: Container(
         decoration: const BoxDecoration(color: Colors.white),
+        constraints: const BoxConstraints(maxWidth: 400),
         child: Column(
           children: [
             Container(

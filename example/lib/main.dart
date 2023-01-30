@@ -14,7 +14,7 @@ void main() {
       'confirm': 'Ya',
     },
     'no_data': {
-      'title': 'Sing Ade Ape!',
+      'title': 'No Data Found',
       'subtitle': 'No Data Available',
     },
   });
