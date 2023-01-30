@@ -9,7 +9,7 @@ if "%input%" == "%input%" goto Commit
 :Commit
     git add .
     if "%input%" == "" ( git commit -m "Bug fixes" ) else ( git commit -m "%input%" )
-    git push origin master
+    git push -f origin master
 
 pause
 exit

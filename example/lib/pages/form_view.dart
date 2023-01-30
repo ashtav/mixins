@@ -12,23 +12,9 @@ class FormView extends StatelessWidget {
         city = TextEditingController(),
         hobby = TextEditingController(text: 'Hot, Salty');
 
-    List<String> cities = [
-      'Denpasar',
-      'Badung',
-      'Tabanan',
-      'Singaraja',
-      "Negare",
-      'Jembrana'
-    ];
+    List<String> cities = ['Denpasar', 'Badung', 'Tabanan', 'Singaraja', "Negare", 'Jembrana'];
 
-    List<String> hobbies = [
-      'Footbal',
-      'Killing',
-      'Drawing',
-      'Reading',
-      'Music',
-      'Writing'
-    ];
+    List<String> hobbies = ['Footbal', 'Killing', 'Drawing', 'Reading', 'Music', 'Writing'];
 
     return Scaffold(
       appBar: AppBar(
@@ -38,10 +24,6 @@ class FormView extends StatelessWidget {
         physics: BounceScroll(),
         padding: Ei.all(20),
         children: [
-          // Forms.input()
-          // Forms.select(onChanged: (o, i) => {})
-          // Forms.radio() Forms.checkbox() Forms.switch()
-
           FormsGroup(children: [
             Forms.input(
               label: 'Your Name',
@@ -49,30 +31,16 @@ class FormView extends StatelessWidget {
               controller: name,
               indicator: true,
             ),
-            Forms.input(
-                label: 'Phone',
-                hint: 'Input phone number',
-                controller: phone,
-                keyboard: Tit.number),
-            Forms.radio(
-                label: 'Gender',
-                options: const ['Male', 'Female'],
-                controller: gender),
-            Forms.checkbox(
-                label: 'Hobby',
-                options: hobbies,
-                controller: hobby,
-                disabled: const [1, 3]),
+            Forms.input(label: 'Phone', hint: 'Input phone number', controller: phone, keyboard: Tit.number),
+            Forms.radio(label: 'Gender', options: const ['Male', 'Female'], controller: gender),
+            Forms.checkbox(label: 'Hobby', options: hobbies, controller: hobby, disabled: const [1, 3]),
           ]),
-
           Forms.select(
             label: 'City',
             hint: 'Select your city',
             controller: city,
-            options:
-                List.generate(cities.length, (i) => Option(option: cities[i])),
+            options: List.generate(cities.length, (i) => Option(option: cities[i])),
           ),
-
           Forms.switches(
             label: 'Available|Not Available',
             onChanged: (value) {},
