@@ -66,8 +66,7 @@ class Select extends StatelessWidget {
         });
   }
 
-  Future open(BuildContext context, Option? option,
-      {required Function(Option) onSelect}) async {
+  Future open(BuildContext context, Option? option, {required Function(Option) onSelect}) async {
     if (options.isEmpty) return;
     FocusScope.of(context).unfocus();
     showModalBottomSheet(
@@ -83,12 +82,7 @@ class Select extends StatelessWidget {
             })));
   }
 
-  Select copyWith(
-      {EdgeInsetsGeometry? margin,
-      BoxBorder? border,
-      BorderRadius? borderRadius,
-      String? hint,
-      TextEditingController? controller}) {
+  Select copyWith({EdgeInsetsGeometry? margin, BoxBorder? border, BorderRadius? borderRadius, String? hint, TextEditingController? controller}) {
     return Select(
         label: label,
         icon: icon,
@@ -110,15 +104,11 @@ class SelectPicker extends StatelessWidget {
   final Function(Option)? onSelect;
   final Option? initialValue;
 
-  const SelectPicker(
-      {Key? key, this.options = const [], this.onSelect, this.initialValue})
-      : super(key: key);
+  const SelectPicker({Key? key, this.options = const [], this.onSelect, this.initialValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int i = this.options.indexWhere((e) => e.value == null
-        ? e.option == initialValue?.option
-        : e.value == initialValue?.value);
+    int i = this.options.indexWhere((e) => e.value == null ? e.option == initialValue?.option : e.value == initialValue?.value);
     i = i == -1 ? 0 : i;
 
     List<String> options = this.options.map((e) => e.option ?? '').toList();
@@ -126,15 +116,11 @@ class SelectPicker extends StatelessWidget {
 
     Map<String, dynamic> result = values.isEmpty
         ? {'option': options.isEmpty ? null : options[i]}
-        : {
-            'option': options.isEmpty ? null : options[i],
-            'value': values.isEmpty ? null : values[i]
-          };
+        : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
 
     Color primaryColor = MixinConfig.getConfig.primaryColor;
     double radius = MixinConfig.getConfig.radius;
-    BorderRadiusGeometry borderRadius =
-        Br.radiusOnly({'tl': radius, 'tr': radius});
+    BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
     return ClipRRect(
       borderRadius: borderRadius,
@@ -156,8 +142,7 @@ class SelectPicker extends StatelessWidget {
                           itemExtent: 40,
                           offAxisFraction: 0,
                           diameterRatio: 1,
-                          scrollController:
-                              FixedExtentScrollController(initialItem: i),
+                          scrollController: FixedExtentScrollController(initialItem: i),
                           selectionOverlay: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(border: Br.only(['b'])),
@@ -167,26 +152,17 @@ class SelectPicker extends StatelessWidget {
                           onSelectedItemChanged: (int selectedItem) {
                             if (onSelect != null) {
                               if (values.isNotEmpty) {
-                                result = {
-                                  'option': options[selectedItem],
-                                  'value': values.length < selectedItem
-                                      ? null
-                                      : values[selectedItem]
-                                };
+                                result = {'option': options[selectedItem], 'value': values.length < selectedItem ? null : values[selectedItem]};
                               } else {
                                 result = {'option': options[selectedItem]};
                               }
                             }
                           },
-                          children: List<Widget>.generate(options.length,
-                              (int index) {
+                          children: List<Widget>.generate(options.length, (int index) {
                             return Center(
                               child: Text(
                                 options[index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    ?.copyWith(fontSize: 16),
+                                style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 16),
                               ),
                             );
                           })),
@@ -223,10 +199,7 @@ class SelectPicker extends StatelessWidget {
                   color: Mixins.hex('f1f5f9'),
                   child: Text('Select',
                       textAlign: Ta.center,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          color: primaryColor,
-                          fontWeight: Fw.bold,
-                          letterSpacing: 1))),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(color: primaryColor, fontWeight: Fw.bold, letterSpacing: 1))),
             ),
           )),
           Positioned.fill(
@@ -303,20 +276,14 @@ class _SelectWidgetState extends State<SelectWidget> {
             child: Container(
               padding: Ei.only(l: 15, r: 15, t: 15, b: 10),
               decoration: BoxDecoration(
-                  border: widget.border ??
-                      Border.all(color: Colors.black12, width: .7),
-                  borderRadius: widget.borderRadius ?? Br.radius(2)),
+                  border: widget.border ?? Border.all(color: Colors.black12, width: .7), borderRadius: widget.borderRadius ?? Br.radius(2)),
               child: Col(children: [
                 Container(
                   margin: Ei.only(b: 2, l: 0),
                   child: Row(
                     mainAxisAlignment: Maa.spaceBetween,
                     children: [
-                      Text(widget.label,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              ?.copyWith(fontSize: 14)),
+                      Text(widget.label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
                     ],
                   ),
                 ),
@@ -325,11 +292,7 @@ class _SelectWidgetState extends State<SelectWidget> {
                   children: [
                     Expanded(
                       child: Row(children: [
-                        widget.icon.isNull
-                            ? const None()
-                            : Iconr(widget.icon!,
-                                color: Colors.white38,
-                                margin: Ei.only(r: 15, b: 15)),
+                        widget.icon.isNull ? const None() : Iconr(widget.icon!, color: Colors.white38, margin: Ei.only(r: 15, b: 15)),
                         Expanded(
                             child: TextInputTransparent(
                           hint: widget.hint,

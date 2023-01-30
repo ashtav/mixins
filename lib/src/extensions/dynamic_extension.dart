@@ -35,18 +35,11 @@ extension DynamicExtension on dynamic {
         default:
       }
 
-      bool allowDecimal =
-          runtimeType == int || runtimeType == String && !contains('.');
+      bool allowDecimal = runtimeType == int || runtimeType == String && !contains('.');
 
-      String result = NumberFormat.currency(
-              locale: 'id_ID',
-              decimalDigits: allowDecimal ? decimalDigits : 0,
-              symbol: symbol)
-          .format(int.parse(num));
+      String result = NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
 
-      return digits.isEmpty
-          ? result
-          : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }
@@ -75,7 +68,16 @@ extension DynamicExtension on dynamic {
   /// name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
   /// ```
   ///
-  dynamic orIf([dynamic value = '-', List conditions = const [null, '']]) {
-    return conditions.contains(this) ? value : this;
+  dynamic orIf([dynamic value, List conditions = const [null, '']]) {
+    Type type = runtimeType;
+    dynamic returnValue = value ?? type == int
+        ? 0
+        : type == double
+            ? 0.0
+            : type == bool
+                ? false
+                : '-';
+
+    return conditions.contains(this) ? returnValue : this;
   }
 }

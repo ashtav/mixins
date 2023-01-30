@@ -8,58 +8,33 @@ class Br {
   /// ``` dart
   /// border: Br.all(Colors.black12)
   /// ```
-  static BoxBorder all(Color color,
-          {double width = .7, BorderStyle style = BorderStyle.solid}) =>
+  static BoxBorder all(Color color, {double width = .7, BorderStyle style = BorderStyle.solid}) =>
       Border.all(color: color, width: width, style: style);
 
   /// ``` dart
   /// border: Br.only(['t'])
   /// ```
   static BoxBorder only(List<String> only,
-          {Color color = Colors.black12,
-          double width = .7,
-          bool except = false,
-          BorderStyle style = BorderStyle.solid}) =>
+          {Color color = Colors.black12, double width = .7, bool except = false, BorderStyle style = BorderStyle.solid}) =>
       Border(
-          top: !only.contains('t') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          bottom: !only.contains('b') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          left: !only.contains('l') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          right: !only.contains('r') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style));
+          top: !only.contains('t') || except ? BorderSide.none : Br.side(color, width: width, style: style),
+          bottom: !only.contains('b') || except ? BorderSide.none : Br.side(color, width: width, style: style),
+          left: !only.contains('l') || except ? BorderSide.none : Br.side(color, width: width, style: style),
+          right: !only.contains('r') || except ? BorderSide.none : Br.side(color, width: width, style: style));
 
   /// ``` dart
   /// border: Br.except(['t'])
   /// ```
-  static BoxBorder except(List<String> except,
-          {Color color = Colors.black12,
-          double width = .7,
-          BorderStyle style = BorderStyle.solid}) =>
-      Border(
-          top: except.contains('t')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          bottom: except.contains('b')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          left: except.contains('l')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          right: except.contains('r')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style));
+  static BoxBorder except(List<String> except, {Color color = Colors.black12, double width = .7, BorderStyle style = BorderStyle.solid}) => Border(
+      top: except.contains('t') ? BorderSide.none : Br.side(color, width: width, style: style),
+      bottom: except.contains('b') ? BorderSide.none : Br.side(color, width: width, style: style),
+      left: except.contains('l') ? BorderSide.none : Br.side(color, width: width, style: style),
+      right: except.contains('r') ? BorderSide.none : Br.side(color, width: width, style: style));
 
   /// ``` dart
   /// Border(left: Br.side(C.black1))
   /// ```
-  static BorderSide side(Color color,
-          {double width = .7, BorderStyle style = BorderStyle.solid}) =>
+  static BorderSide side(Color color, {double width = .7, BorderStyle style = BorderStyle.solid}) =>
       BorderSide(color: color, width: width, style: style);
 
   /// ``` dart
@@ -68,14 +43,13 @@ class Br {
   static BorderRadius radius(double value) => BorderRadius.circular(value);
 
   /// ``` dart
-  /// borderRadius: Br.radiusOnly({'tl': 15, 'tr': 15})
+  /// borderRadius: Br.radiusOnly()
   /// ```
-  static BorderRadiusGeometry radiusOnly(Map<String, double> map) =>
-      BorderRadius.only(
-          topLeft: Radius.circular(map['tl'] ?? 0),
-          topRight: Radius.circular(map['tr'] ?? 0),
-          bottomLeft: Radius.circular(map['bl'] ?? 0),
-          bottomRight: Radius.circular(map['br'] ?? 0));
+  static BorderRadiusGeometry radiusOnly({double? tl, double? tr, double? bl, double? br}) => BorderRadius.only(
+      topLeft: Radius.circular(tl ?? 2),
+      topRight: Radius.circular(tr ?? 2),
+      bottomLeft: Radius.circular(bl ?? 2),
+      bottomRight: Radius.circular(br ?? 2));
 
   /// ``` dart
   /// borderRadius: Br.circle
@@ -95,18 +69,12 @@ class Br {
 class Ei {
   static const none = EdgeInsets.all(0);
 
-  static only(
-          {double? b, double? t, double? l, double? r, double others = 0}) =>
-      EdgeInsets.only(
-          bottom: b ?? others,
-          top: t ?? others,
-          left: l ?? others,
-          right: r ?? others);
+  static only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
+      EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others);
 
   static all(double value) => EdgeInsets.all(value);
 
-  static sym({double v = 0, double h = 0}) =>
-      EdgeInsets.symmetric(vertical: v, horizontal: h);
+  static sym({double v = 0, double h = 0}) => EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// ``` dart
   /// // set all values is 15 except top
