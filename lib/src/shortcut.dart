@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-// ========================================
-// BORDER
-// ========================================
+/* --------------------------------------------------------------------------------
+| BORDER
+| ---------------------------------------------------------- */
 
 class Br {
   /// ``` dart
@@ -54,151 +54,151 @@ class Br {
   /// ``` dart
   /// borderRadius: Br.circle
   /// ```
-  static final circle = BorderRadius.circular(99999);
+  static BorderRadius circle = BorderRadius.circular(99999);
 
   /// ``` dart
   /// borderRadius: Br.zero
   /// ```
-  static get zero => BorderRadius.zero;
+  static const BorderRadius zero = BorderRadius.zero;
 }
 
-// ========================================
-// EDGE INSETS
-// ========================================
+/* --------------------------------------------------------------------------------
+| EDGE INSETS
+| ---------------------------------------------------------- */
 
 class Ei {
-  static const none = EdgeInsets.all(0);
+  static const EdgeInsets none = EdgeInsets.zero;
 
-  static only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
+  static EdgeInsets only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
       EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others);
 
-  static all(double value) => EdgeInsets.all(value);
+  static EdgeInsets all(double value) => EdgeInsets.all(value);
 
-  static sym({double v = 0, double h = 0}) => EdgeInsets.symmetric(vertical: v, horizontal: h);
+  static EdgeInsets sym({double v = 0, double h = 0}) => EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// ``` dart
   /// // set all values is 15 except top
   /// Ei.except(['t'], 15);
   /// ```
-  static except(List<String> except, [double padding = 15]) => EdgeInsets.only(
+  static EdgeInsets except(List<String> except, [double padding = 15]) => EdgeInsets.only(
       bottom: !except.contains('b') ? padding : 0,
       top: !except.contains('t') ? padding : 0,
       left: !except.contains('l') ? padding : 0,
       right: !except.contains('r') ? padding : 0);
 }
 
-// ========================================
-// MAIN AXIS SIZE
-// ========================================
+/* --------------------------------------------------------------------------------
+| MAIN AXIS SIZE
+| ---------------------------------------------------------- */
 
 class Mas {
-  static const max = MainAxisSize.max;
-  static const min = MainAxisSize.min;
+  static const MainAxisSize max = MainAxisSize.max;
+  static const MainAxisSize min = MainAxisSize.min;
 }
 
-// ========================================
-// MAIN AXIS ALIGNMENT
-// ========================================
+/* --------------------------------------------------------------------------------
+| MAIN AXIS ALIGNMENT
+| ---------------------------------------------------------- */
 
 class Maa {
-  static const start = MainAxisAlignment.start;
-  static const center = MainAxisAlignment.center;
-  static const end = MainAxisAlignment.end;
-  static const spaceAround = MainAxisAlignment.spaceAround;
-  static const spaceBetween = MainAxisAlignment.spaceBetween;
-  static const spaceEvenly = MainAxisAlignment.spaceEvenly;
+  static const MainAxisAlignment start = MainAxisAlignment.start;
+  static const MainAxisAlignment center = MainAxisAlignment.center;
+  static const MainAxisAlignment end = MainAxisAlignment.end;
+  static const MainAxisAlignment spaceAround = MainAxisAlignment.spaceAround;
+  static const MainAxisAlignment spaceBetween = MainAxisAlignment.spaceBetween;
+  static const MainAxisAlignment spaceEvenly = MainAxisAlignment.spaceEvenly;
 }
 
-// ========================================
-// CROSS AXIS ALIGNMENT
-// ========================================
+/* --------------------------------------------------------------------------------
+| CROSS AXIS ALIGNMENT
+| ---------------------------------------------------------- */
 
 class Caa {
-  static const start = CrossAxisAlignment.start;
-  static const center = CrossAxisAlignment.center;
-  static const end = CrossAxisAlignment.end;
-  static const baseline = CrossAxisAlignment.baseline;
-  static const stretch = CrossAxisAlignment.stretch;
+  static const CrossAxisAlignment start = CrossAxisAlignment.start;
+  static const CrossAxisAlignment center = CrossAxisAlignment.center;
+  static const CrossAxisAlignment end = CrossAxisAlignment.end;
+  static const CrossAxisAlignment baseline = CrossAxisAlignment.baseline;
+  static const CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
 }
 
-// ========================================
-// WRAP AXIS ALIGNMENT
-// ========================================
+/* --------------------------------------------------------------------------------
+| WRAP AXIS ALIGNMENT
+| ---------------------------------------------------------- */
 
 class Wca {
-  static const start = WrapCrossAlignment.start;
-  static const center = WrapCrossAlignment.center;
-  static const end = WrapCrossAlignment.end;
+  static const WrapCrossAlignment start = WrapCrossAlignment.start;
+  static const WrapCrossAlignment center = WrapCrossAlignment.center;
+  static const WrapCrossAlignment end = WrapCrossAlignment.end;
 }
 
-// ========================================
-// WRAP ALIGNMENT
-// ========================================
+/* --------------------------------------------------------------------------------
+| WRAP ALIGNMENT
+| ---------------------------------------------------------- */
 
 class Wa {
-  static const start = WrapAlignment.start;
-  static const center = WrapAlignment.center;
-  static const end = WrapAlignment.end;
-  static const spaceAround = WrapAlignment.end;
-  static const spaceBetween = WrapAlignment.end;
-  static const spaceEvenly = WrapAlignment.end;
+  static const WrapAlignment start = WrapAlignment.start;
+  static const WrapAlignment center = WrapAlignment.center;
+  static const WrapAlignment end = WrapAlignment.end;
+  static const WrapAlignment spaceAround = WrapAlignment.end;
+  static const WrapAlignment spaceBetween = WrapAlignment.end;
+  static const WrapAlignment spaceEvenly = WrapAlignment.end;
 }
 
-// ========================================
-// TEXT ALIGN
-// ========================================
+/* --------------------------------------------------------------------------------
+| TEXT ALIGN
+| ---------------------------------------------------------- */
 
 class Ta {
-  static const start = TextAlign.start;
-  static const left = TextAlign.left;
-  static const right = TextAlign.right;
-  static const end = TextAlign.end;
-  static const justify = TextAlign.justify;
-  static const center = TextAlign.center;
+  static const TextAlign start = TextAlign.start;
+  static const TextAlign left = TextAlign.left;
+  static const TextAlign right = TextAlign.right;
+  static const TextAlign end = TextAlign.end;
+  static const TextAlign justify = TextAlign.justify;
+  static const TextAlign center = TextAlign.center;
 }
 
-// ========================================
-// TEXT OVERFLOW
-// ========================================
+/* --------------------------------------------------------------------------------
+| TEXT OVERFLOW
+| ---------------------------------------------------------- */
 
 class Tof {
-  static const clip = TextOverflow.clip;
-  static const ellipsis = TextOverflow.ellipsis;
-  static const fade = TextOverflow.fade;
-  static const visible = TextOverflow.visible;
+  static const TextOverflow clip = TextOverflow.clip;
+  static const TextOverflow ellipsis = TextOverflow.ellipsis;
+  static const TextOverflow fade = TextOverflow.fade;
+  static const TextOverflow visible = TextOverflow.visible;
 }
 
-// ========================================
-// FONT WEIGHT
-// ========================================
+/* --------------------------------------------------------------------------------
+| FONT WEIGHT
+| ---------------------------------------------------------- */
 
 class Fw {
-  static const normal = FontWeight.normal;
-  static const bold = FontWeight.bold;
-  static const w100 = FontWeight.w100;
-  static const w200 = FontWeight.w200;
-  static const w300 = FontWeight.w300;
-  static const w400 = FontWeight.w400;
-  static const w500 = FontWeight.w500;
-  static const w600 = FontWeight.w600;
-  static const w700 = FontWeight.w700;
-  static const w800 = FontWeight.w800;
-  static const w900 = FontWeight.w900;
+  static const FontWeight normal = FontWeight.normal;
+  static const FontWeight bold = FontWeight.bold;
+  static const FontWeight w100 = FontWeight.w100;
+  static const FontWeight w200 = FontWeight.w200;
+  static const FontWeight w300 = FontWeight.w300;
+  static const FontWeight w400 = FontWeight.w400;
+  static const FontWeight w500 = FontWeight.w500;
+  static const FontWeight w600 = FontWeight.w600;
+  static const FontWeight w700 = FontWeight.w700;
+  static const FontWeight w800 = FontWeight.w800;
+  static const FontWeight w900 = FontWeight.w900;
 }
 
-// ========================================
-// TEXT INPUT TYPE
-// ========================================
+/* --------------------------------------------------------------------------------
+| TEXT INPUT TYPE
+| ---------------------------------------------------------- */
 
 class Tit {
-  static const datetime = TextInputType.datetime;
-  static const emailAddress = TextInputType.emailAddress;
-  static const multiline = TextInputType.multiline;
-  static const name = TextInputType.name;
-  static const number = TextInputType.number;
-  static const phone = TextInputType.phone;
-  static const streetAddress = TextInputType.streetAddress;
-  static const text = TextInputType.text;
-  static const url = TextInputType.url;
-  static const visiblePassword = TextInputType.visiblePassword;
+  static const TextInputType datetime = TextInputType.datetime;
+  static const TextInputType emailAddress = TextInputType.emailAddress;
+  static const TextInputType multiline = TextInputType.multiline;
+  static const TextInputType name = TextInputType.name;
+  static const TextInputType number = TextInputType.number;
+  static const TextInputType phone = TextInputType.phone;
+  static const TextInputType streetAddress = TextInputType.streetAddress;
+  static const TextInputType text = TextInputType.text;
+  static const TextInputType url = TextInputType.url;
+  static const TextInputType visiblePassword = TextInputType.visiblePassword;
 }
