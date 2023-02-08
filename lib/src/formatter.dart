@@ -10,6 +10,7 @@ class InputFormat {
   static TextInputFormatter get lowercase => LowerCaseTextFormatter();
   static TextInputFormatter get uppercase => UpperCaseTextFormatter();
   static TextInputFormatter get ucwords => UcwordsFormatter();
+  static TextInputFormatter get idr => ThousandFormatter();
 
   /// ```dart
   /// formatters: [

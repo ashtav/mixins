@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:mixins/src/extensions/datetime_extension.dart';
+import 'package:mixins/src/extensions/string_extension.dart';
 import 'package:mixins/src/log.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -32,10 +33,8 @@ class Mixins {
   /// }
   /// ```
   static errorCatcher(e, StackTrace s) {
-    List frames = Trace.current().frames,
-        terseFrames = Trace.from(s).terse.frames;
-    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0],
-        trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
+    List frames = Trace.current().frames, terseFrames = Trace.from(s).terse.frames;
+    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0], trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
 
     String errorLocation = '${frame.member}', errorLine = '${trace.line}';
     logg('-- Error on $errorLocation (Line $errorLine), $e');
@@ -47,11 +46,9 @@ class Mixins {
   /// Mixins.setSystemUI();
   /// ```
   static setSystemUI(
-      {Brightness brightness = Brightness.dark,
-      Color? statusBarColor,
-      Color? navDividerColor,
-      Color? navBarColor}) {
+      {Brightness brightness = Brightness.dark, Color? statusBarColor, Color? navDividerColor, Brightness? navBarIconColor, Color? navBarColor}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarIconBrightness: navBarIconColor ?? Brightness.dark,
         statusBarIconBrightness: brightness,
         statusBarColor: statusBarColor ?? Colors.transparent,
         systemNavigationBarDividerColor: navDividerColor,
@@ -61,9 +58,7 @@ class Mixins {
   /// ``` dart
   /// Mixins.statusBar(true); // set false to hide
   /// ```
-  static void statusBar([bool show = true]) =>
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: show ? SystemUiOverlay.values : []);
+  static void statusBar([bool show = true]) => SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: show ? SystemUiOverlay.values : []);
 
   // CLIPBOARD =============================================
 
@@ -80,62 +75,45 @@ class Mixins {
   ///   // do something...
   /// }, 100);
   /// ```
-  static Timer timer(void Function() then, [int ms = 50]) =>
-      Timer(Duration(milliseconds: ms), then);
+  static Timer timer(void Function() then, [int ms = 50]) => Timer(Duration(milliseconds: ms), then);
 
   /// ``` dart
   /// Mixins.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Sabtu, 20 Maret 2021
   /// ```
-  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) =>
-      DateTime.fromMillisecondsSinceEpoch(ms).format(format);
+  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) => DateTime.fromMillisecondsSinceEpoch(ms).format(format);
 
   /// ```dart
   /// String timeElapsed = Mixins.timeElapsed('2021-02-24 11:12:30', inDay: 'day ago');
   /// // put value with String or DateTime only
   /// // only for 1 month calculation
   /// ```
-  static String timeElapsed(dynamic dateTime,
-      {String? inDay,
-      String? inHour,
-      String? inMinute,
-      String justNow = 'just now'}) {
+  static String timeElapsed(dynamic dateTime, {String? inDay, String? inHour, String? inMinute, String justNow = 'just now'}) {
     try {
-      Duration compare(DateTime x, DateTime y) => Duration(
-          microseconds:
-              (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
+      Duration compare(DateTime x, DateTime y) => Duration(microseconds: (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
 
       DateTime date = dateTime is String ? DateTime.parse(dateTime) : dateTime;
 
       DateTime x = DateTime.now();
-      DateTime y = DateTime(
-          date.year, date.month, date.day, date.hour, date.minute, date.second);
+      DateTime y = DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second);
 
       Duration diff = compare(x, y);
-      String h = '${date.hour}'.padLeft(2, '0'),
-          m = '${date.minute}'.padLeft(2, '0'),
-          s = '${date.second}'.padLeft(2, '0');
+      String h = '${date.hour}'.padLeft(2, '0'), m = '${date.minute}'.padLeft(2, '0'), s = '${date.second}'.padLeft(2, '0');
 
-      String dateTimeStr =
-          '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
+      String dateTimeStr = '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
 
       // if init value more then current time
       if (y.millisecondsSinceEpoch > x.millisecondsSinceEpoch) {
         return '-';
       }
 
-      String textInDay(int value) =>
-          inDay ?? (value > 1 ? 'days ago' : 'day ago');
-      String textInHour(int value) =>
-          inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
-      String textInMinute(int value) =>
-          inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
+      String textInDay(int value) => inDay ?? (value > 1 ? 'days ago' : 'day ago');
+      String textInHour(int value) => inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
+      String textInMinute(int value) => inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
 
       if (diff.inSeconds >= 60) {
         if (diff.inMinutes >= 60) {
           if (diff.inHours >= 24) {
-            return diff.inDays > 31
-                ? dateTimeStr
-                : '${diff.inDays} ${textInDay(diff.inDays)}';
+            return diff.inDays > 31 ? dateTimeStr : '${diff.inDays} ${textInDay(diff.inDays)}';
           } else {
             return '${diff.inHours} ${textInHour(diff.inHours)}';
           }
@@ -170,10 +148,8 @@ class Mixins {
   /// ``` dart
   /// Mixins.randString(10); // generate random string value
   /// ```
-  static String randString(int length,
-      {bool withSymbol = false, List<String> customChar = const []}) {
-    String chars =
-        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  static String randString(int length, {bool withSymbol = false, List<String> customChar = const []}) {
+    String chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     if (customChar.isNotEmpty) {
       chars = customChar.join();
@@ -198,12 +174,8 @@ class Mixins {
   /// TextEditingController name = TextEditingController();
   /// Mixins.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller,
-      [int time = 0]) {
-    Timer(
-        Duration(milliseconds: time),
-        () => controller.selection = TextSelection.fromPosition(
-            TextPosition(offset: controller.text.length)));
+  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
+    Timer(Duration(milliseconds: time), () => controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)));
   }
 
   // SCROLL =================================================
@@ -212,19 +184,14 @@ class Mixins {
   /// ScrollController scroll = ScrollController();
   /// Mixins.scrollTo(scroll);
   /// ```
-  static scrollTo(ScrollController scrollController,
-      {int duration = 300,
-      int delay = 50,
-      AxisDirection to = AxisDirection.up}) {
+  static scrollTo(ScrollController scrollController, {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down
-                ? scrollController.position.maxScrollExtent
-                : 0,
+            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -253,8 +220,7 @@ class Mixins {
   /// }
   /// ```
 
-  static void scrollToWidget(
-      GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -325,10 +291,7 @@ class Mixins {
   /// ```dart
   /// Mixins.orientation([DeviceOrientation.landscapeLeft]);
   /// ```
-  static void orientation(
-      [List<DeviceOrientation> orientations = const [
-        DeviceOrientation.portraitUp
-      ]]) {
+  static void orientation([List<DeviceOrientation> orientations = const [DeviceOrientation.portraitUp]]) {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
@@ -337,8 +300,7 @@ class Mixins {
   /// ```dart
   /// File file = await Mixins.urlToFile('FILE-URL');
   /// ```
-  static Future<File> urlToFile(String imageUrl,
-      {String format = 'png'}) async {
+  static Future<File> urlToFile(String imageUrl, {String format = 'png'}) async {
     try {
       // get temporary directory of device.
       Directory tempDir = await getTemporaryDirectory();
@@ -347,8 +309,7 @@ class Mixins {
       String tempPath = tempDir.path;
 
       // create a new file in temporary path with random file name.
-      File file =
-          File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
+      File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
 
       // call http.get method and pass imageUrl into it to get response.
       http.Response response = await http.get(Uri.parse(imageUrl));
@@ -411,8 +372,80 @@ class Mixins {
     var bytes = await rootBundle.load('assets/$imageName');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/$fileName.png');
-    await file.writeAsBytes(
-        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
+  }
+
+  /// ```dart
+  /// String text = await Mixins.htmlToText('<p>HTML</p>');
+  /// ```
+  static htmlToText(String html) {
+    // replace <br /> = \n
+    // &ldquo;, &rdquo; = "
+    // &lsquo;, &rsquo; = '
+    // &amp; = &
+    // &nbsp; = ' '
+    // &hellip; = ...
+    // &ndash; = -
+    // &mdash; = --
+    // &lt; = <
+    // &gt; = >
+    // &copy; = ©
+    // &reg; = ®
+    // &trade; = ™
+    // &euro; = €
+    // &pound; = £
+    // &yen; = ¥
+    // &cent; = ¢
+    // &sect; = §
+    // &para; = ¶
+    // &deg; = °
+    // &plusmn; = ±
+    // &sup2; = ²
+    // &sup3; = ³
+    // &frac14; = ¼
+    // &frac12; = ½
+    // &frac34; = ¾
+    // &times; = ×
+    // &divide; = ÷
+    // &micro; = µ
+    // &middot; = ·
+    // &bull; = •
+
+    return html
+        .replaceAll('<br />', '\n')
+        .replaceAll('&ldquo;', '"')
+        .replaceAll('&rdquo;', '"')
+        .replaceAll('&lsquo;', "'")
+        .replaceAll('&rsquo;', "'")
+        .replaceAll('&amp;', '&')
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&hellip;', '...')
+        .replaceAll('&ndash;', '-')
+        .replaceAll('&mdash;', '--')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&copy;', '©')
+        .replaceAll('&reg;', '®')
+        .replaceAll('&trade;', '™')
+        .replaceAll('&euro;', '€')
+        .replaceAll('&pound;', '£')
+        .replaceAll('&yen;', '¥')
+        .replaceAll('&cent;', '¢')
+        .replaceAll('&sect;', '§')
+        .replaceAll('&para;', '¶')
+        .replaceAll('&deg;', '°')
+        .replaceAll('&plusmn;', '±')
+        .replaceAll('&sup2;', '²')
+        .replaceAll('&sup3;', '³')
+        .replaceAll('&frac14;', '¼')
+        .replaceAll('&frac12;', '½')
+        .replaceAll('&frac34;', '¾')
+        .replaceAll('&times;', '×')
+        .replaceAll('&divide;', '÷')
+        .replaceAll('&micro;', 'µ')
+        .replaceAll('&middot;', '·')
+        .replaceAll('&bull;', '•')
+        .removeHtmlTag;
   }
 }

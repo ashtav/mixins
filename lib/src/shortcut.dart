@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 class Br {
   /// ``` dart
-  /// border: Br.all(Colors.black12)
+  /// border: Br.all(color: Colors.black12)
   /// ```
-  static BoxBorder all(Color color, {double width = .7, BorderStyle style = BorderStyle.solid}) =>
-      Border.all(color: color, width: width, style: style);
+  static BoxBorder all({Color? color, double width = .7, BorderStyle style = BorderStyle.solid}) =>
+      Border.all(color: color ?? Colors.black12, width: width, style: style);
 
   /// ``` dart
   /// border: Br.only(['t'])
@@ -39,8 +39,15 @@ class Br {
 
   /// ``` dart
   /// borderRadius: Br.radius(15)
+  /// borderRadius: Br.radius(15, except: ['bl', 'br'])
   /// ```
-  static BorderRadius radius(double value) => BorderRadius.circular(value);
+  static BorderRadius radius(double value, {List<String>? except}) => except == null
+      ? BorderRadius.circular(value)
+      : BorderRadius.only(
+          topLeft: except.contains('tl') ? Radius.zero : Radius.circular(value),
+          topRight: except.contains('tr') ? Radius.zero : Radius.circular(value),
+          bottomLeft: except.contains('bl') ? Radius.zero : Radius.circular(value),
+          bottomRight: except.contains('br') ? Radius.zero : Radius.circular(value));
 
   /// ``` dart
   /// borderRadius: Br.radiusOnly()
@@ -72,7 +79,13 @@ class Ei {
   static EdgeInsets only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
       EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others);
 
-  static EdgeInsets all(double value) => EdgeInsets.all(value);
+  static EdgeInsets all(double value, {List<String>? except}) => except == null
+      ? EdgeInsets.all(value)
+      : EdgeInsets.only(
+          bottom: except.contains('b') ? 0 : value,
+          top: except.contains('t') ? 0 : value,
+          left: except.contains('l') ? 0 : value,
+          right: except.contains('r') ? 0 : value);
 
   static EdgeInsets sym({double v = 0, double h = 0}) => EdgeInsets.symmetric(vertical: v, horizontal: h);
 

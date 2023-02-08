@@ -33,6 +33,7 @@ extension DynamicExtension on dynamic {
           }
           break;
         default:
+          return 'Rp?';
       }
 
       bool allowDecimal = runtimeType == int || runtimeType == String && !contains('.');

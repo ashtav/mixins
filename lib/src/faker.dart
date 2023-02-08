@@ -4,10 +4,18 @@ import 'package:mixins/mixins.dart';
 import 'package:mixins/src/constant.dart';
 
 class Faker {
+  // generate random number based on length
+  static String number([int length = 5]) {
+    int randomInt = Random().nextInt(pow(10, length) as int);
+    return randomInt.toString();
+  }
+
   // generate random price based on length
   static String price([int length = 5]) {
     int randomInt = Random().nextInt(pow(10, length) as int);
-    return randomInt.idr();
+    String price = randomInt.toString();
+
+    return (price.length < length ? '${price}1' : price).idr();
   }
 
   // generate random name
