@@ -4,7 +4,7 @@ extension ListExtension on List {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
-  dynamic getRandom([int length = 1]) {
+  List getRandom([int length = 1]) {
     List result = [];
     for (int i = 0; i < length; i++) {
       result.add(this[Random().nextInt(this.length)]);
@@ -31,10 +31,7 @@ extension ListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];

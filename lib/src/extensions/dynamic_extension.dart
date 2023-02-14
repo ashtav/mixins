@@ -56,13 +56,13 @@ extension DynamicExtension on dynamic {
   /// String? data;
   /// print(data.isNull); // true
   /// ```
-  get isNull => (this == null);
+  bool get isNull => (this == null);
 
   /// ``` dart
   /// String? data;
   /// print(data.isNotNull); // false
   /// ```
-  get isNotNull => (this != null);
+  bool get isNotNull => (this != null);
 
   /// ``` dart
   /// String? name;

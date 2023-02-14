@@ -1,3 +1,4 @@
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeExtension on DateTime {
@@ -5,8 +6,9 @@ extension DateTimeExtension on DateTime {
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05
   /// ```
-  String format([String format = 'yyyy-MM-dd']) {
-    return DateFormat(format).format(this);
+  String format([String format = 'yyyy-MM-dd', String? locale]) {
+    if (locale != null) initializeDateFormatting(locale, null);
+    return DateFormat(format, locale).format(this);
   }
 
   /// ```dart

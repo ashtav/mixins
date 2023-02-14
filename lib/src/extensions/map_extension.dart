@@ -17,12 +17,12 @@ extension MapTECExtension on Map<String, TextEditingController> {
 
 extension MapExtension on Map<String, dynamic> {
   /// ``` dart
-  /// Map<String, dynamic> data = {'price': 'IDR 250'}.numberOnly(['price']); // {'price': 250}
+  /// Map<String, dynamic> data = {'price': 'IDR 250'}.numeric(['price']); // {'price': 250}
   /// ```
-  Map<String, dynamic> numberOnly([List<String> keys = const []]) {
+  Map<String, dynamic> numeric([List<String> keys = const []]) {
     return map((key, value) {
       if (keys.contains(key)) {
-        return MapEntry(key, value.toString().numeric);
+        return MapEntry(key, value.toString().getNumeric);
       } else {
         return MapEntry(key, value);
       }

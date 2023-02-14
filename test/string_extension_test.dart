@@ -4,10 +4,59 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mixins/mixins.dart';
 
 void main() {
-  String price = Faker.price(5);
-  test('Check price generator, result: $price', () {
-    // expect contains Rp and length of number if 5
-    expect(price.contains('Rp'), true);
-    expect(price.numeric.toString().length, 5);
+  String ucwords = 'john doe'.ucwords;
+  String ucfirst = 'john doe'.ucfirst;
+  String firstChar = 'John Doe'.firstChar(length: 2);
+  int getNumeric = 'lipsum99'.getNumeric;
+  DateTime toDate = "2023-02-10 00:00:00".toDate();
+  String rsb = 'lorem ipsum dolor'.removeStringBefore('ipsum');
+  String rsa = 'lorem ipsum dolor'.removeStringAfter('ipsum');
+  String rsbe = 'lorem ipsum dolor'.removeStringBetween('lorem', 'dolor');
+  String gsb = 'lorem ipsum dolor'.getStringBetween('lorem', 'dolor');
+  String removeHtmlTag = '<h1>Hello World</h1>'.removeHtmlTag;
+  bool isJson = '{}'.isJson;
+
+  test('ucwords, result: $ucwords', () {
+    expect(ucwords, 'John Doe');
+  });
+
+  test('ucfirst, result: $ucfirst', () {
+    expect(ucfirst, 'John doe');
+  });
+
+  test('firstChar, result: $firstChar', () {
+    expect(firstChar, 'JD');
+  });
+
+  test('getNumeric, result: $getNumeric', () {
+    expect(getNumeric, 99);
+  });
+
+  test('toDate, result: $toDate', () {
+    expect(toDate.runtimeType, DateTime);
+  });
+
+  test('removeStringBefore, result: $rsb', () {
+    expect(rsb, 'ipsum dolor');
+  });
+
+  test('removeStringAfter, result: $rsa', () {
+    expect(rsa, 'lorem ipsum');
+  });
+
+  test('removeStringBetween, result: $rsbe', () {
+    expect(rsbe, 'lorem dolor');
+  });
+
+  test('getStringBetween, result: $gsb', () {
+    expect(gsb, ' ipsum ');
+  });
+
+  test('removeHtmlTag, result: $removeHtmlTag', () {
+    expect(removeHtmlTag, 'Hello World');
+  });
+
+  test('isJson, result: $isJson', () {
+    expect(isJson, true);
   });
 }

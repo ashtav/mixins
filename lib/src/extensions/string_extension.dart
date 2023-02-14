@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
+import 'package:mixins/mixins.dart';
 
 extension StringExtension on String {
   /// ``` dart
@@ -30,14 +30,15 @@ extension StringExtension on String {
   }
 
   /// ``` dart
-  /// print('lipsum99'.numeric); // 99
+  /// print('john doe'.ucfirst); // John doe
   /// ```
-  int get numeric {
+  String get ucfirst {
     try {
-      if (trim().isEmpty) return 0;
-      return int.parse(replaceAll(RegExp(r'[^0-9-]'), ''));
+      String str = this;
+      if (str.trim() == '') return '';
+      return str[0].toUpperCase() + str.substring(1);
     } catch (e) {
-      return 0;
+      return '';
     }
   }
 
@@ -57,13 +58,25 @@ extension StringExtension on String {
   }
 
   /// ``` dart
+  /// print('lipsum99'.getNumeric); // 99
+  /// ```
+  int get getNumeric {
+    try {
+      if (trim().isEmpty) return 0;
+      return int.parse(replaceAll(RegExp(r'[^0-9-]'), ''));
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  /// ``` dart
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
   /// ```
-  DateTime toDate({String format = 'yyyy-MM-dd HH:mm:ss'}) {
+  DateTime toDate() {
     try {
-      if (trim().isEmpty) return DateTime.now();
       return DateTime.parse(trim());
     } catch (e) {
+      logg(e.toString(), name: 'StringExtension');
       return DateTime.now();
     }
   }
@@ -92,17 +105,17 @@ extension StringExtension on String {
   }
 
   /// ``` dart
-  /// 'lorem ipsum dolor'.removeStringBetween('lorem','ipsum'); // lorem dolor
+  /// 'lorem ipsum dolor'.removeStringBetween('lorem','dolor'); // lorem dolor
   /// ```
-  String removeStringBetween(String start, String end) {
+
+  String removeStringBetween(String startWord, String endWord) {
     try {
-      int startIndex = indexOf(start);
-      int endIndex = indexOf(end);
-
-      String beforeBracket = substring(0, startIndex);
-      String afterBracket = substring(endIndex + end.length);
-
-      return beforeBracket + afterBracket;
+      final startIndex = indexOf(startWord);
+      final endIndex = indexOf(endWord, startIndex + startWord.length);
+      if (startIndex == -1 || endIndex == -1) {
+        return this; // Either startWord or endWord not found
+      }
+      return replaceRange(startIndex + startWord.length, endIndex, ' ').trim();
     } catch (e) {
       return this;
     }

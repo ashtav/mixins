@@ -17,7 +17,7 @@ void main() {
   test('Check price generator, result: $price', () {
     // expect contains Rp and length of number if 5
     expect(price.contains('Rp'), true);
-    expect(price.numeric.toString().length, 5);
+    expect(price.getNumeric.toString().length, 5);
   });
 
   test('Check name generator, result: $name', () {
